@@ -65,8 +65,5 @@ public class Drink {
     public String showDrink(){
         return dId + ". " + dName + " " + " " + price + " Baht\n";
     }
-
-    public String showOrderedDrink(){
-        return dName + " " + topping + " " + sweetness + "Sweetness" + " " + price + " Baht\n";
-    }
+    
 }

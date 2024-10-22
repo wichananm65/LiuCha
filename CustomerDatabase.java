@@ -5,7 +5,7 @@ public class CustomerDatabase {
     public CustomerDatabase(){
         customers = new Customer[2];
         customers[0] = new Customer(1, "Wichanan", "123456", "0123456789");
-        customers[1] = new Customer(2, "Somsak", "111111", "0999999999");
+        customers[1] = new Customer(2, "Somsak", "1", "1");
     }
 
     public boolean authenticate(String phone, String password) {

@@ -9,7 +9,11 @@ public class DrinksDatabase {
         drinks[2] = new Drink(3, "Green Tea", 15);
         drinks[3] = new Drink(4, "Matcha", 20);
         drinks[4] = new Drink(5, "Milk Tea", 20);
-        drinksCount = 5;
+        drinksCount = drinks.length;
+    }
+
+    public int getDrinksCount(){
+        return this.drinksCount;
     }
 
     public void addDrink(String dName, double price){
@@ -19,7 +23,7 @@ public class DrinksDatabase {
         }
         newDrinks[this.drinks.length] = new Drink(drinksCount, dName, price);
         this.drinks = newDrinks;
-        this.drinksCount++;
+        this.drinksCount = drinks.length;
     }
 
     public void deleteDrink(int dId){
@@ -38,6 +42,7 @@ public class DrinksDatabase {
             newDrinks[k++] = this.drinks[i];
         }
         this.drinks = newDrinks;
+        drinksCount = drinks.length;
     }
 
     public void editDrink(int dId, String dName, double price){
@@ -50,12 +55,16 @@ public class DrinksDatabase {
         System.out.println("Successfully Edit " + this.drinks[dId-1].showDrink());
     } 
 
-    public String showAllDrinks(){
-        String text = "";
+    public void showAllDrinks(){
+        String text = "-----Menu-----";
         for(int i=0; i<this.drinks.length;i++){
             text = text + this.drinks[i].showDrink();
         }
-        return text;
+        System.out.println(text);;
+    }
+
+    public Drink getADrink(int dId){
+        return drinks[dId];
     }
 
 }

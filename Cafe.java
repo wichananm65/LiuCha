@@ -4,11 +4,16 @@ public class Cafe{
     private boolean authenticate;
     private Customer currentCus;
     private CustomerDatabase cusDb;
+    private Order order;
+    private int oId;
+    private DrinksDatabase drinkDb;
 
     public Cafe(){
         this.authenticate = false;
         this.currentCus = new Customer(0, null, null, null);
         this.cusDb = new CustomerDatabase();
+        this.drinkDb = new DrinksDatabase();
+        oId = 0;
     }
 
     public void run() {
@@ -26,7 +31,10 @@ public class Cafe{
                 authenticateCus();
             }
 
-            
+            order = new Order(oId, currentCus, this.drinkDb, null);
+            order.run();
+            oId++;
+            break;
         }
         
     }

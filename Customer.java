@@ -1,4 +1,4 @@
-
+import java.util.Scanner;
 public class Customer extends Person{
     //attribute
     private String phone;
@@ -53,4 +53,9 @@ public class Customer extends Person{
         this.receipts = newReceipt;
     }
 
+    public int placeOrder(){
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        return num;
+    }
 }
