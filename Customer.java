@@ -52,10 +52,4 @@ public class Customer extends Person{
         newReceipt[this.receipts.length] = latestReceipt;
         this.receipts = newReceipt;
     }
-
-    public int placeOrder(){
-        Scanner sc = new Scanner(System.in);
-        int num = sc.nextInt();
-        return num;
-    }
 }

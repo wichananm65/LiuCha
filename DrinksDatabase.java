@@ -56,7 +56,7 @@ public class DrinksDatabase {
     } 
 
     public void showAllDrinks(){
-        String text = "-----Menu-----";
+        String text = "-----Menu-----\n";
         for(int i=0; i<this.drinks.length;i++){
             text = text + this.drinks[i].showDrink();
         }
