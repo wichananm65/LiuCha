@@ -49,7 +49,11 @@ public class Order {
                 ordering = false;
             }
             else if(num==drinkDb.getDrinksCount()+1){
-                ordering = false;
+                System.out.println("Select a drink to cancel by number");
+                showOrderedDrinks();
+                num = sc.nextInt();
+                this.totalPrice = this.totalPrice - orderedDrinks[num-1].getPrice();
+                deleteOrderedDrink(num);
             }
             
             else{
@@ -83,19 +87,22 @@ public class Order {
     }
 
     public void addOrderedDrink(int num){
-        int dId = num-1;
-        if(this.orderedDrinks.length == 0){
-            this.orderedDrinks = new Drink[1];
-            this.orderedDrinks[0] = this.drinkDb.getADrink(dId);
-        }
-        else{
-            Drink newOrderedDrinks[] = new Drink[this.orderedDrinks.length+1];  
-            for(int i=0;i<this.orderedDrinks.length;i++){
+        int dId = num - 1;
+        Drink selectedDrink = drinkDb.getADrink(dId);
+        
+        if (this.orderedDrinks.length == 0) {
+        this.orderedDrinks = new Drink[1];
+        this.orderedDrinks[0] = new Drink(orderedDrinks.length, selectedDrink.getDName(), selectedDrink.getPrice());
+    } else {
+        Drink[] newOrderedDrinks = new Drink[this.orderedDrinks.length + 1];
+        
+        for (int i = 0; i < this.orderedDrinks.length; i++) {
             newOrderedDrinks[i] = this.orderedDrinks[i];
-            }
-            newOrderedDrinks[this.orderedDrinks.length] = drinkDb.getADrink(dId);
-            this.orderedDrinks = newOrderedDrinks;
         }
+        
+        newOrderedDrinks[this.orderedDrinks.length] = new Drink(orderedDrinks.length, selectedDrink.getDName(), selectedDrink.getPrice());
+        this.orderedDrinks = newOrderedDrinks;
+    }
 
         System.out.println("Select your Topping by number");
         System.out.println("1. Bubble");
@@ -104,9 +111,11 @@ public class Order {
         System.out.println("4. Brown Sugar Konjac");
         System.out.println("5. Diamond oKonjac");
         System.out.println("6. None");
-        int toppingNum = sc.nextInt();
+        
         boolean loop = true;
+        int toppingNum;
         while(loop){
+            toppingNum = sc.nextInt();
             switch (toppingNum) {
             case 1:
                 this.orderedDrinks[this.orderedDrinks.length-1].setTopping("Bubble");
@@ -125,17 +134,40 @@ public class Order {
                 loop = false;
                 break;
             case 5:
-                this.orderedDrinks[this.orderedDrinks.length-1].setTopping("Diamond oKonjac");
+                this.orderedDrinks[this.orderedDrinks.length-1].setTopping("Diamond Konjac");
                 loop = false;
                 break;
             case 6:
+                this.orderedDrinks[this.orderedDrinks.length-1].setTopping("None");
+                loop = false;
                 break;
             default:
                 System.out.println("Wrong command. Please select Number between 1-6");
+                System.out.println("Select your Topping by number");
+                break;
         }
         }
          
     }
+
+    public void deleteOrderedDrink(int num) {
+        if (this.orderedDrinks.length == 0) {
+            System.out.println("Order is already empty");
+        } else if (num < 1 || num > this.orderedDrinks.length) {
+            System.out.println("Invalid Input");
+        } else {
+            Drink[] newOrderedDrinks = new Drink[this.orderedDrinks.length - 1];
+            for (int i = 0, k = 0; i < this.orderedDrinks.length; i++) {
+                if (i == num-1) {
+                    continue;
+                }
+                newOrderedDrinks[k++] = this.orderedDrinks[i];
+            }
+            this.orderedDrinks = newOrderedDrinks;
+            System.out.println("Delete Success");
+        }
+    }
+    
 
     public void showOrderedDrinks(){
         System.out.println("Your Order");

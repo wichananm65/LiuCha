@@ -54,7 +54,7 @@ public class Drink {
             this.price = this.price + 5;
         }
         else{
-            this.price = this.price  + 10;
+            this.price = this.price + 10;
         }
     }
 
