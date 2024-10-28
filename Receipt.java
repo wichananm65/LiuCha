@@ -2,15 +2,24 @@
 public class Receipt {
     //attribute
     private int rId;
-    private String detail;
+    private Order order;
 
-    public Receipt(int rId, String detail) {
-        this.rId = rId;
-        this.detail = detail;
+    public Receipt(Order order) {
+        this.rId = order.getOId();
+        this.order = order;
     }
 
-    public String showReceipt(){
-        return "Receipt Number: " + rId + "\n" + detail;
+    public int getRId(){
+        return rId;
+    }
+
+    public Order getOrder(){
+        return order;
+    }
+
+    public void showReceipt(){
+        System.out.println("Receipt ID: " + rId);
+        order.showOrder();
     }
 
 }

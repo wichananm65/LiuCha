@@ -1,4 +1,4 @@
-import java.util.Scanner;
+
 public class Customer extends Person{
     //attribute
     private String phone;
@@ -27,12 +27,10 @@ public class Customer extends Person{
         return text;
     }
 
-    public String showAllReceipt(){
-        String text = "";
+    public void showCustomerReceipts(){
         for(int i=0;i<receipts.length;i++){
-            text = text + receipts[i].showReceipt() + "\n";
+            receipts[i].showReceipt();
         }
-        return text;
     }
 
     public void addPayment(Payment latestPayment) {
@@ -44,12 +42,19 @@ public class Customer extends Person{
         this.payments = newPayment;
     }
 
-    public void addReceipt(Receipt latestReceipt) {
-        Receipt newReceipt[] = new Receipt[this.receipts.length+1];  
-        for(int i=0;i<this.receipts.length;i++){
-            newReceipt[i] = this.receipts[i];
+    public void addReceipt(Order order){
+        if (this.receipts.length == 0) {
+            this.receipts = new Receipt[1];
+            this.receipts[0] = new Receipt(order);
+        } else {
+            Receipt[] newReceipts = new Receipt[this.receipts.length + 1];
+
+            for (int i = 0; i < this.receipts.length; i++) {
+                newReceipts[i] = this.receipts[i];
+            }
+
+            newReceipts[this.receipts.length] = new Receipt(order);
+            this.receipts = newReceipts;
         }
-        newReceipt[this.receipts.length] = latestReceipt;
-        this.receipts = newReceipt;
     }
 }

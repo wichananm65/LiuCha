@@ -6,6 +6,7 @@ public class Order {
     private int oId;
     private double totalPrice;
     private LocalDate date;
+    private String status;
 
     // composition
     private Customer customer;
@@ -26,11 +27,12 @@ public class Order {
         date = LocalDate.now();
         totalPrice = 0;
         this.orderedDrinks = new Drink[0];
+        this.status = "Brewing";
 
         this.sc = new Scanner(System.in);
     }
 
-    public void run() {
+    public void ordering() {
         boolean ordering = true;
         while (ordering == true) {
             drinkDb.showAllDrinks();
@@ -43,12 +45,12 @@ public class Order {
                 addOrderedDrink(num);
                 this.totalPrice = this.totalPrice + orderedDrinks[orderedDrinks.length - 1].getPrice();
             } else if (num == drinkDb.getDrinksCount() + 2) {
-                showOrderedDrinks();
+                showOrder();
                 System.out.println("Total price: " + getTotalPrice());
                 ordering = false;
             } else if (num == drinkDb.getDrinksCount() + 1) {
                 System.out.println("Select a drink to cancel by number");
-                showOrderedDrinks();
+                showOrder();
                 num = sc.nextInt();
                 this.totalPrice = this.totalPrice - orderedDrinks[num - 1].getPrice();
                 deleteOrderedDrink(num);
@@ -80,8 +82,12 @@ public class Order {
         return totalPrice;
     }
 
-    public String showOrder() {
-        return "Order Number: " + oId;
+    public String getStatus(){
+        return this.status;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
     }
 
     public void addOrderedDrink(int num) {
@@ -126,13 +132,14 @@ public class Order {
         }
     }
 
-    public void showOrderedDrinks() {
+    public void showOrder() {
         System.out.println("Your Order");
+        System.out.println("Order ID: " + getOId());
         for (int i = 0; i < orderedDrinks.length; i++) {
             System.out
                     .println(i + 1 + ". " + orderedDrinks[i].getDName() + " Topping: " + orderedDrinks[i].getTopping() +
                             " Sweetness: " + orderedDrinks[i].getSweetness()
-                            + " " + orderedDrinks[i].getPrice() + " Baht");
+                            + " " + orderedDrinks[i].getPrice() + " Baht" + "\n" + getStatus());
         }
 
     }
