@@ -27,7 +27,7 @@ public class Order {
         date = LocalDate.now();
         totalPrice = 0;
         this.orderedDrinks = new Drink[0];
-        this.status = "Brewing";
+        this.status = "In progress";
 
         this.sc = new Scanner(System.in);
     }
@@ -60,6 +60,10 @@ public class Order {
                 System.out.println("Please select number in menu");
             }
         }
+    }
+
+    public void cancelOrder(){
+        this.status = "Canceled";
     }
 
     public int getOId() {

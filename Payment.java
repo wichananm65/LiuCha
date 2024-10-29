@@ -1,17 +1,11 @@
 // Payment.java
 public class Payment {
-    private int pId;
     private String bankAccount;
     private double money;
 
-    public Payment(int pId, String bankAccount, double amount) {
-        this.pId = pId;
+    public Payment(String bankAccount, double money) {
         this.bankAccount = bankAccount;
         this.money = money;
-    }
-
-    public int getPId(){
-        return pId;
     }
 
     public String getBankAccount(){
@@ -20,5 +14,17 @@ public class Payment {
 
     public double getMoney() {
         return money;
+    }
+
+    public boolean paid(double price){
+        if(this.money < price){
+            System.out.println("Insufficient balance");
+            return false;
+        }
+        else{
+            System.out.println("Successfully paid");
+            this.money = this.money - price;
+            return true;
+        }    
     }
 }

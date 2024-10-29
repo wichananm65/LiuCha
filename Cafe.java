@@ -6,6 +6,7 @@ public class Cafe {
     private CustomerDatabase cusDb;
     private Order[] orders;
     private DrinksDatabase drinkDb;
+    private Payment[] payments;
 
     private Scanner sc;
 
@@ -15,6 +16,10 @@ public class Cafe {
         this.cusDb = new CustomerDatabase();
         this.drinkDb = new DrinksDatabase();
         this.orders = new Order[0];
+        this.payments = new Payment[3];
+        payments[0] = new Payment("1234567890", 1000);
+        payments[1] = new Payment("1111111111", 20);
+        payments[2] = new Payment("2222222222", 0);
 
         this.sc = new Scanner(System.in);
     }
@@ -57,39 +62,82 @@ public class Cafe {
             int num = sc.nextInt();
             switch (num) {
                 case 1:
-                    if(orders.length==0){
+                    if (orders.length == 0) {
                         this.orders = new Order[1];
-                        this.orders[this.orders.length-1] = new Order(this.orders.length, currentCus, this.drinkDb, null);
-                        this.orders[this.orders.length-1].ordering();
-                    }
-                    else{
-                        Order[] newOrders = new Order[this.orders.length+1];
-                        for(int i = 0;i<this.orders.length;i++){
-                            newOrders[i] = this.orders[i]; 
+                        this.orders[this.orders.length - 1] = new Order(this.orders.length, currentCus, this.drinkDb,
+                                null);
+                        this.orders[this.orders.length - 1].ordering();
+                        System.out.println("Enter your bankaccount");
+                        String bankAccount = sc.next();
+                        for (int i = 0; i < payments.length; i++) {
+                            if (bankAccount.equals(payments[i].getBankAccount())) {
+                                if (payments[i].paid(this.orders[this.orders.length - 1].getTotalPrice()) == true) {
+                                    currentCus.addReceipt(orders[this.orders.length - 1]);
+                                    break;
+                                } else {
+                                    this.orders[this.orders.length - 1].cancelOrder();
+                                    break;
+                                }
+                            }
+                            if ((i == payments.length - 1)
+                                    && (bankAccount.equals(payments[i].getBankAccount()) == false)) {
+                                System.out.println("Invalid account number");
+                                this.orders[this.orders.length - 1].cancelOrder();
+                            }
                         }
-                        newOrders[newOrders.length-1] = new Order(newOrders.length, currentCus, this.drinkDb, null);
+                    } else {
+                        Order[] newOrders = new Order[this.orders.length + 1];
+                        for (int i = 0; i < this.orders.length; i++) {
+                            newOrders[i] = this.orders[i];
+                        }
+                        newOrders[newOrders.length - 1] = new Order(newOrders.length, currentCus, this.drinkDb, null);
                         this.orders = newOrders;
-                        this.orders[this.orders.length-1].ordering();
+                        this.orders[this.orders.length - 1].ordering();
+                        System.out.println("Enter your bankaccount");
+                        String bankAccount = sc.next();
+                        for (int i = 0; i < payments.length; i++) {
+                            if (bankAccount.equals(payments[i].getBankAccount())) {
+                                if (payments[i].paid(this.orders[this.orders.length - 1].getTotalPrice()) == true) {
+                                    currentCus.addReceipt(orders[this.orders.length - 1]);
+                                    break;
+                                } else {
+                                    this.orders[this.orders.length - 1].cancelOrder();
+                                    break;
+                                }
+                            }
+                            if ((i == payments.length - 1)
+                                    && (bankAccount.equals(payments[i].getBankAccount()) == false)) {
+                                System.out.println("Invalid account number");
+                                this.orders[this.orders.length - 1].cancelOrder();
+                            }
+                        }
                     }
-                    currentCus.addReceipt(orders[this.orders.length-1]);
+
                     break;
 
                 case 2:
+                    System.out.println("Enter order ID");
+                    int oId = sc.nextInt();
+                    if (oId < 1 || oId > this.orders.length) {
+                        System.out.println("Not has that order");
+                    } else {
+                        this.orders[oId - 1].cancelOrder();
+                    }
                     break;
 
                 case 3:
                     currentCus.showCustomerReceipts();
 
                 case 4:
+                    System.out.println("Enter order ID");
                     int oIdSelect = sc.nextInt();
-                    if(oIdSelect<1||oIdSelect>this.orders.length){
-                        System.out.println("Shop not has that order");
-                    }
-                    else{
+                    if (oIdSelect < 1 || oIdSelect > this.orders.length) {
+                        System.out.println("Not has that order");
+                    } else {
                         System.out.println("Order " + oIdSelect);
-                        System.out.println("Status " + this.orders[oIdSelect-1].getStatus());
+                        System.out.println("Status " + this.orders[oIdSelect - 1].getStatus());
                     }
-                
+
                 case 5:
                     loop = false;
                     break;
