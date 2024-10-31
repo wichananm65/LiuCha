@@ -4,6 +4,8 @@ public class Cafe {
     private boolean authenticate;
     private Customer currentCus;
     private CustomerDatabase cusDb;
+    private Rider currentRi;
+    private RiderDatabase riDb;
     private Order[] orders;
     private DrinksDatabase drinkDb;
     private Payment[] payments;
@@ -14,6 +16,8 @@ public class Cafe {
         this.authenticate = false;
         this.currentCus = new Customer(0, null, null, null);
         this.cusDb = new CustomerDatabase();
+        this.currentRi = new Rider(0, null, null, null, null, null);
+        this.riDb = new RiderDatabase();
         this.drinkDb = new DrinksDatabase();
         this.orders = new Order[0];
         this.payments = new Payment[3];
@@ -36,9 +40,11 @@ public class Cafe {
             int num = sc.nextInt();
             switch (num) {
                 case 1:
-                    customerLogin();
+                    customerApp();
                     break;
 
+                case 3:
+                    riderApp();
                 default:
                     break;
             }
@@ -46,20 +52,23 @@ public class Cafe {
 
     }
 
-    public void customerLogin() {
+    public void customerApp() {
         boolean loop = true;
+        boolean login = false;
         while (loop) {
-            while (!authenticate) {
-                authenticateCus();
+            while (login == false) {
+                login = cusLogin();
             }
-
+            System.out.println("-----------------------");
             System.out.println("Please select number");
             System.out.println("1. Place order");
             System.out.println("2. Canel order");
             System.out.println("3. Check receipt");
             System.out.println("4. Check order status");
             System.out.println("5. Exit");
+            System.out.println("-----------------------");
             int num = sc.nextInt();
+            sc.nextLine();
             switch (num) {
                 case 1:
                     if (orders.length == 0) {
@@ -73,6 +82,7 @@ public class Cafe {
                             if (bankAccount.equals(payments[i].getBankAccount())) {
                                 if (payments[i].paid(this.orders[this.orders.length - 1].getTotalPrice()) == true) {
                                     currentCus.addReceipt(orders[this.orders.length - 1]);
+
                                     break;
                                 } else {
                                     this.orders[this.orders.length - 1].cancelOrder();
@@ -127,7 +137,7 @@ public class Cafe {
 
                 case 3:
                     currentCus.showCustomerReceipts();
-
+                    break;
                 case 4:
                     System.out.println("Enter order ID");
                     int oIdSelect = sc.nextInt();
@@ -139,6 +149,7 @@ public class Cafe {
                     }
 
                 case 5:
+                    authenticate = false;
                     loop = false;
                     break;
 
@@ -151,8 +162,7 @@ public class Cafe {
         }
     }
 
-    public boolean authenticateCus() {
-        Scanner sc = new Scanner(System.in);
+    public boolean cusLogin() {
         System.out.println("Please enter your phone number");
         String phone = sc.nextLine();
         System.out.println("please enter your password");
@@ -161,10 +171,76 @@ public class Cafe {
         if (authenticate == true) {
             this.currentCus = cusDb.getACustomer(phone, password);
             System.out.println("Welcome " + currentCus.getName());
+            return true;
         } else {
             System.out.println("Wrong phone number or password. Please try again");
+            return false;
         }
-        return false;
+    }
+
+    public void riderApp() {
+        boolean loop = true;
+        boolean login = false;
+        while (loop) {
+            while (login == false) {
+                login = riLogin();
+            }
+            System.out.println("------------------");
+            System.out.println("Please select number");
+            System.out.println("1. Deliver Order");
+            System.out.println("2. Exit");
+            System.out.println("------------------");
+            int num = sc.nextInt();
+            sc.nextLine();
+            switch (num) {
+                case 1:
+                    int waitingDrink[] = new int[this.orders.length];
+                    System.out.println("Select Order ID");
+                    for(int i=0;i<orders.length;i++){
+                        if(orders[i].getStatus()=="In progress"){
+                            System.out.println();
+                            orders[i].showOrder();
+                            waitingDrink[i] = orders[i].getOId();
+                        }
+                    }
+                    int select = sc.nextInt();
+                    if(select<orders.length){
+                        for(int i = 0;i<orders.length;i++){
+                            if(select==orders[i].getOId()){
+                                orders[i].delivering();
+                            }
+                        }
+                    }
+                    else{
+                        System.out.println("Not has that order.");
+                    }
+                    break;
+                case 2:
+                    break;
+                default:
+                    System.out.println("Wrong input. Please choose number between 1-3");
+                    break;
+
+            }
+
+        }
+
+    }
+
+    public boolean riLogin() {
+        System.out.println("Please enter your phone number");
+        String phone = sc.nextLine();
+        System.out.println("please enter your password");
+        String password = sc.nextLine();
+        authenticate = riDb.authenticate(phone, password);
+        if (authenticate == true) {
+            this.currentRi = riDb.getARider(phone, password);
+            System.out.println("Welcome " + currentRi.getName());
+            return true;
+        } else {
+            System.out.println("Wrong phone number or password. Please try again");
+            return false;
+        }
     }
 
 }

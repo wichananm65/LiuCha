@@ -63,7 +63,18 @@ public class Order {
     }
 
     public void cancelOrder(){
-        this.status = "Canceled";
+        if(this.status == "In progress"){
+            this.status = "Canceled";
+            System.out.println("Order cancel sucessfully");
+        }
+        else{
+            System.out.println("Can not cancel order");
+        }
+        
+    }
+
+    public void delivering(){
+        this.status = "Delivering";
     }
 
     public int getOId() {
@@ -92,6 +103,10 @@ public class Order {
 
     public void setStatus(String status){
         this.status = status;
+    }
+
+    public void setRider(Rider rider){
+        this.rider = rider;
     }
 
     public void addOrderedDrink(int num) {
@@ -138,6 +153,8 @@ public class Order {
 
     public void showOrder() {
         System.out.println("Your Order");
+        System.out.println("Name: " + customer.getName() + " ");
+        System.out.println("Phone: " + customer.getPhone());
         System.out.println("Order ID: " + getOId());
         for (int i = 0; i < orderedDrinks.length; i++) {
             System.out

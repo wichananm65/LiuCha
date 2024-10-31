@@ -1,4 +1,4 @@
-public class DrinksDatabase {
+ public class DrinksDatabase {
     private Drink[] drinks;
     private int drinksCount;
 
