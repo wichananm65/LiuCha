@@ -77,6 +77,10 @@ public class Order {
         this.status = "Delivering";
     }
 
+    public void delivered(){
+        this.status = "Delivered";
+    }
+
     public int getOId() {
         return oId;
     }
@@ -89,8 +93,8 @@ public class Order {
         return payment.getBankAccount();
     }
 
-    public String getRider() {
-        return rider.getName() + " " + rider.getPhone();
+    public Rider getRider() {
+        return rider;
     }
 
     public double getTotalPrice() {
@@ -152,8 +156,9 @@ public class Order {
     }
 
     public void showOrder() {
-        System.out.println("Your Order");
-        System.out.println("Name: " + customer.getName() + " ");
+        System.out.println("------------------");
+        System.out.println("Order");
+        System.out.println("Customer name: " + customer.getName() + " ");
         System.out.println("Phone: " + customer.getPhone());
         System.out.println("Order ID: " + getOId());
         for (int i = 0; i < orderedDrinks.length; i++) {

@@ -181,41 +181,91 @@ public class Cafe {
     public void riderApp() {
         boolean loop = true;
         boolean login = false;
+        int select;
         while (loop) {
             while (login == false) {
                 login = riLogin();
             }
+            int inProgressNum = 0;
+            int deliveringNum = 0;
+            for (int i = 0; i < orders.length; i++) {
+                if (orders[i].getStatus() == "In progress") {
+                    inProgressNum++;
+                }
+                if ((orders[i].getStatus() == "Delivering") && (orders[i].getRider() == currentRi)) {
+                    deliveringNum++;
+                }
+            }
+            Order[] inProgressOrders = new Order[inProgressNum];
+            Order[] deliveringOrders = new Order[deliveringNum];
+            int inCount = 0;
+            int deliverCount = 0;
+            for (int i = 0; i < orders.length; i++) {
+                if (orders[i].getStatus() == "In progress") {
+                    inProgressOrders[inCount] = orders[i];
+                    inCount++;
+                }
+                if ((orders[i].getStatus() == "Delivering") && (orders[i].getRider() == currentRi)) {
+                    deliveringOrders[deliverCount] = orders[i];
+                    deliverCount++;
+                }
+            }
             System.out.println("------------------");
             System.out.println("Please select number");
-            System.out.println("1. Deliver Order");
-            System.out.println("2. Exit");
+            System.out.println("1. Receieve Order");
+            System.out.println("2. Deliver Order");
             System.out.println("------------------");
             int num = sc.nextInt();
             sc.nextLine();
             switch (num) {
                 case 1:
-                    int waitingDrink[] = new int[this.orders.length];
                     System.out.println("Select Order ID");
-                    for(int i=0;i<orders.length;i++){
-                        if(orders[i].getStatus()=="In progress"){
-                            System.out.println();
-                            orders[i].showOrder();
-                            waitingDrink[i] = orders[i].getOId();
-                        }
+                    for (int i = 0; i < inProgressNum; i++) {
+                        inProgressOrders[i].showOrder();
                     }
-                    int select = sc.nextInt();
-                    if(select<orders.length){
-                        for(int i = 0;i<orders.length;i++){
-                            if(select==orders[i].getOId()){
+                    if (inProgressNum == 0) {
+                        System.out.println("Not has order");
+                        break;
+                    }
+                select = sc.nextInt();
+                    if ((select <= orders.length && (select > 0))) {
+                        for (int i = 0; i < orders.length; i++) {
+                            if (select == orders[i].getOId()) {
+                                orders[i].setRider(currentRi);
                                 orders[i].delivering();
                             }
                         }
-                    }
-                    else{
+                    } else {
                         System.out.println("Not has that order.");
                     }
                     break;
+
                 case 2:
+                    System.out.println("Select Order ID");
+                    for (int i = 0; i < deliveringNum; i++) {
+                        deliveringOrders[i].showOrder();
+                    }
+                    if (deliveringNum == 0) {
+                        System.out.println("Not has order");
+                        break;
+                    }
+                    select = sc.nextInt();
+                    if ((select <= orders.length && (select > 0))) {
+                        for (int i = 0; i < orders.length; i++) {
+                            if (select == orders[i].getOId()) {
+                                orders[i].delivered();
+                                currentRi.updateIncome(10);
+                                System.out.println(currentRi.getIncome());
+                            }
+                        }
+                    } else {
+                        System.out.println("Not has that order.");
+                    }
+                    break;
+                    
+
+                case 3:
+                    loop = false;
                     break;
                 default:
                     System.out.println("Wrong input. Please choose number between 1-3");
