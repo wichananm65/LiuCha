@@ -85,16 +85,16 @@ public class Order {
         return oId;
     }
 
-    public String getCustomer() {
-        return customer.getName() + " " + customer.getPhone();
-    }
-
     public String getPayment() {
         return payment.getBankAccount();
     }
 
     public Rider getRider() {
         return rider;
+    }
+
+    public Customer getCustomer(){
+        return customer;
     }
 
     public double getTotalPrice() {

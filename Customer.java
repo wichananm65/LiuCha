@@ -18,9 +18,15 @@ public class Customer extends Person{
     }
 
     public void showCustomerReceipts(){
-        for(int i=0;i<receipts.length;i++){
-            receipts[i].showReceipt();
+        if(receipts.length>0){
+            for(int i=0;i<receipts.length;i++){
+                receipts[i].showReceipt();
+            }
         }
+        else{
+            System.out.println("Not has receipt");
+        }
+        
     }
 
     public void addReceipt(Order order){

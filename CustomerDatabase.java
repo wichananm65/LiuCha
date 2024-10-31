@@ -8,7 +8,7 @@ public class CustomerDatabase {
         customers[1] = new Customer(2, "Somsak", "1", "1");
     }
 
-    public boolean authenticate(String phone, String password) {
+    public boolean authenticateCus(String phone, String password) {
         for (int i = 0; i < customers.length; i++) {
             if (customers[i].getPhone().equals(phone)) {
                 if (customers[i].getPassword().equals(password)) {
@@ -21,16 +21,5 @@ public class CustomerDatabase {
         return false;
     }
 
-    public Customer getACustomer(String phone, String password){
-        Customer nowCustomer = new Customer(0, "null", "null", "null");
-        for(int i=0;i<customers.length;i++){
-            if(customers[i].getPhone().equals(phone)){
-                if(customers[i].getPassword().equals(password)){
-                    nowCustomer = customers[i];
-                    break;
-                }
-            }
-        }
-        return nowCustomer;
-    }
+    
 }

@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class Cafe {
     private boolean authenticate;
-    private Customer currentCus;
-    private CustomerDatabase cusDb;
+    private int currentCus;
+    private Customer[] customers;
     private Rider currentRi;
     private RiderDatabase riDb;
     private Order[] orders;
@@ -14,13 +14,16 @@ public class Cafe {
 
     public Cafe() {
         this.authenticate = false;
-        this.currentCus = new Customer(0, null, null, null);
-        this.cusDb = new CustomerDatabase();
         this.currentRi = new Rider(0, null, null, null, null, null);
         this.riDb = new RiderDatabase();
         this.drinkDb = new DrinksDatabase();
         this.orders = new Order[0];
         this.payments = new Payment[3];
+
+        customers = new Customer[2];
+        customers[0] = new Customer(1, "Wichanan", "123456", "0123456789");
+        customers[1] = new Customer(2, "Somsak", "1", "1");
+
         payments[0] = new Payment("1234567890", 1000);
         payments[1] = new Payment("1111111111", 20);
         payments[2] = new Payment("2222222222", 0);
@@ -73,7 +76,7 @@ public class Cafe {
                 case 1:
                     if (orders.length == 0) {
                         this.orders = new Order[1];
-                        this.orders[this.orders.length - 1] = new Order(this.orders.length, currentCus, this.drinkDb,
+                        this.orders[this.orders.length - 1] = new Order(this.orders.length, customers[currentCus], this.drinkDb,
                                 null);
                         this.orders[this.orders.length - 1].ordering();
                         System.out.println("Enter your bankaccount");
@@ -81,8 +84,6 @@ public class Cafe {
                         for (int i = 0; i < payments.length; i++) {
                             if (bankAccount.equals(payments[i].getBankAccount())) {
                                 if (payments[i].paid(this.orders[this.orders.length - 1].getTotalPrice()) == true) {
-                                    currentCus.addReceipt(orders[this.orders.length - 1]);
-
                                     break;
                                 } else {
                                     this.orders[this.orders.length - 1].cancelOrder();
@@ -100,7 +101,7 @@ public class Cafe {
                         for (int i = 0; i < this.orders.length; i++) {
                             newOrders[i] = this.orders[i];
                         }
-                        newOrders[newOrders.length - 1] = new Order(newOrders.length, currentCus, this.drinkDb, null);
+                        newOrders[newOrders.length - 1] = new Order(newOrders.length, customers[currentCus], this.drinkDb, null);
                         this.orders = newOrders;
                         this.orders[this.orders.length - 1].ordering();
                         System.out.println("Enter your bankaccount");
@@ -108,7 +109,6 @@ public class Cafe {
                         for (int i = 0; i < payments.length; i++) {
                             if (bankAccount.equals(payments[i].getBankAccount())) {
                                 if (payments[i].paid(this.orders[this.orders.length - 1].getTotalPrice()) == true) {
-                                    currentCus.addReceipt(orders[this.orders.length - 1]);
                                     break;
                                 } else {
                                     this.orders[this.orders.length - 1].cancelOrder();
@@ -136,7 +136,7 @@ public class Cafe {
                     break;
 
                 case 3:
-                    currentCus.showCustomerReceipts();
+                    customers[currentCus].showCustomerReceipts();
                     break;
                 case 4:
                     System.out.println("Enter order ID");
@@ -167,15 +167,29 @@ public class Cafe {
         String phone = sc.nextLine();
         System.out.println("please enter your password");
         String password = sc.nextLine();
-        authenticate = cusDb.authenticate(phone, password);
+        authenticate = authenticateCus(phone, password);
         if (authenticate == true) {
-            this.currentCus = cusDb.getACustomer(phone, password);
-            System.out.println("Welcome " + currentCus.getName());
+            
+            System.out.println("Welcome " + customers[currentCus].getName());
             return true;
         } else {
             System.out.println("Wrong phone number or password. Please try again");
             return false;
         }
+    }
+
+    public boolean authenticateCus(String phone, String password) {
+        for (int i = 0; i < customers.length; i++) {
+            if (customers[i].getPhone().equals(phone)) {
+                if (customers[i].getPassword().equals(password)) {
+                    currentCus = i;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     public void riderApp() {
@@ -214,12 +228,13 @@ public class Cafe {
             System.out.println("Please select number");
             System.out.println("1. Receieve Order");
             System.out.println("2. Deliver Order");
+            System.out.println("3. Exit");
             System.out.println("------------------");
             int num = sc.nextInt();
             sc.nextLine();
             switch (num) {
                 case 1:
-                    System.out.println("Select Order ID");
+
                     for (int i = 0; i < inProgressNum; i++) {
                         inProgressOrders[i].showOrder();
                     }
@@ -227,7 +242,9 @@ public class Cafe {
                         System.out.println("Not has order");
                         break;
                     }
-                select = sc.nextInt();
+                    System.out.println("------------------");
+                    System.out.println("Select Order ID");
+                    select = sc.nextInt();
                     if ((select <= orders.length && (select > 0))) {
                         for (int i = 0; i < orders.length; i++) {
                             if (select == orders[i].getOId()) {
@@ -241,7 +258,6 @@ public class Cafe {
                     break;
 
                 case 2:
-                    System.out.println("Select Order ID");
                     for (int i = 0; i < deliveringNum; i++) {
                         deliveringOrders[i].showOrder();
                     }
@@ -249,20 +265,28 @@ public class Cafe {
                         System.out.println("Not has order");
                         break;
                     }
+                    System.out.println("------------------");
+                    System.out.println("Select Order ID");
                     select = sc.nextInt();
                     if ((select <= orders.length && (select > 0))) {
                         for (int i = 0; i < orders.length; i++) {
                             if (select == orders[i].getOId()) {
                                 orders[i].delivered();
+                                for(int k=0;i<customers.length;k++){
+                                    if(orders[i].getCustomer()==customers[k]){
+                                        customers[k].addReceipt(orders[i]);
+                                        break;
+                                    }
+                                }
                                 currentRi.updateIncome(10);
                                 System.out.println(currentRi.getIncome());
+                                break;
                             }
                         }
                     } else {
                         System.out.println("Not has that order.");
                     }
                     break;
-                    
 
                 case 3:
                     loop = false;
