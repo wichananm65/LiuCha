@@ -1,6 +1,6 @@
 
 public class Receipt {
-    //attribute
+    // attribute
     private int rId;
     private String detail;
     private double totalPrice;
@@ -11,19 +11,19 @@ public class Receipt {
         this.totalPrice = totalPrice;
     }
 
-    public int getRId(){
+    public int getRId() {
         return rId;
     }
 
-    public String getDetail(){
+    public String getDetail() {
         return detail;
     }
 
-    public double getTotalPrice(){
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void showReceipt(){
+    public void showReceipt() {
         System.out.println("-------------------");
         System.out.println("Receipt ID: " + rId);
         System.out.println(detail);

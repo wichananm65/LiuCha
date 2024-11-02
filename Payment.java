@@ -8,7 +8,7 @@ public class Payment {
         this.money = money;
     }
 
-    public String getBankAccount(){
+    public String getBankAccount() {
         return bankAccount;
     }
 
@@ -16,15 +16,14 @@ public class Payment {
         return money;
     }
 
-    public boolean paid(double price){
-        if(this.money < price){
+    public boolean paid(double price) {
+        if (this.money < price) {
             System.out.println("Insufficient balance");
             return false;
-        }
-        else{
+        } else {
             System.out.println("Successfully paid");
             this.money = this.money - price;
             return true;
-        }    
+        }
     }
 }

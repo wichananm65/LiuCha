@@ -170,8 +170,11 @@ public class Order {
     public void showOrder() {
         System.out.println("------------------");
         System.out.println("Order");
-        System.out.println("Customer name: " + customer.getName() + " ");
-        System.out.println("Phone: " + customer.getPhone());
+        if (customer != null) {
+            System.out.println("Customer name: " + customer.getName() + " ");
+            System.out.println("Phone: " + customer.getPhone());
+        }
+
         System.out.println("Order ID: " + getOId());
         for (int i = 0; i < orderedDrinks.length; i++) {
             System.out
@@ -179,10 +182,9 @@ public class Order {
                             " Sweetness: " + orderedDrinks[i].getSweetness()
                             + " " + orderedDrinks[i].getPrice() + " Baht");
         }
-        if(this.rider!=null){
+        if (this.rider != null) {
             rider.showRider();
-        }
-        else{
+        } else {
             System.out.println("Waiting rider to receive");
         }
 

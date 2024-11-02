@@ -1,6 +1,6 @@
 
-public class Owner extends Person{
-    
+public class Owner extends Person {
+
     private Drink[] drinks;
     private SaleHistory[] saleHistory;
 
@@ -13,13 +13,13 @@ public class Owner extends Person{
         return name;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public String showAllDrinks(){
+    public String showAllDrinks() {
         String text = "";
-        for(int i=0;i<drinks.length;i++){
+        for (int i = 0; i < drinks.length; i++) {
             text = text + i + "." + drinks[i].showDrink() + "\n";
         }
         return text;

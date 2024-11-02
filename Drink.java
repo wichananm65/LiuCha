@@ -15,8 +15,8 @@ public class Drink {
         sweetness = "Regular";
     }
 
-    //get
-    public int getDId(){
+    // get
+    public int getDId() {
         return dId;
     }
 
@@ -28,28 +28,28 @@ public class Drink {
         return price;
     }
 
-    public String getTopping(){
+    public String getTopping() {
         return topping;
     }
 
-    public String getSweetness(){
+    public String getSweetness() {
         return sweetness;
     }
 
-    //set
-    public void setDid(int dId){
+    // set
+    public void setDid(int dId) {
         this.dId = dId;
     }
 
-    public void setDName(String dName){
+    public void setDName(String dName) {
         this.dName = dName;
     }
 
-    public void setPrice(double price){
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public void setTopping(){
+    public void setTopping() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Select your Topping by number");
         System.out.println("1. Bubble");
@@ -93,18 +93,16 @@ public class Drink {
                     break;
             }
         }
-        if(topping == "Bubble" || topping == "Fruit Salad"){
+        if (topping == "Bubble" || topping == "Fruit Salad") {
             this.price = this.price + 5;
-        }
-        else if(topping == "None"){
+        } else if (topping == "None") {
 
-        }
-        else{
+        } else {
             this.price = this.price + 10;
         }
     }
 
-    public void setSweetness(){
+    public void setSweetness() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Select your Sweetness by number");
         System.out.println("1. None");
@@ -118,7 +116,7 @@ public class Drink {
             sweetnessNum = sc.nextInt();
             switch (sweetnessNum) {
                 case 1:
-                    this.sweetness= "None";
+                    this.sweetness = "None";
                     loop = false;
                     break;
                 case 2:
@@ -141,8 +139,8 @@ public class Drink {
         }
     }
 
-    public String showDrink(){
+    public String showDrink() {
         return dId + ". " + dName + " " + " " + price + " Baht\n";
     }
-    
+
 }

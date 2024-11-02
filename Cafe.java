@@ -347,43 +347,62 @@ public class Cafe {
         }
     }
 
-    public void ownerApp(){
-            this.date = LocalDate.now();
-            boolean loop = true;
-            boolean login = false;
-            while (loop) {
-                while (login == false) {
-                    login = owLogin();
-                    if(login == false){
-                        return;
-                    }
-                }
-         
-                System.out.println("------------------");
-                System.out.println("Please select number");
-                System.out.println("1. Receieve Order");
-                System.out.println("2. Deliver Order");
-                System.out.println("3. Exit");
-                System.out.println("------------------");
-                int num = sc.nextInt();
-                sc.nextLine();
-                switch (num) {
-                    case 1:
-
-                        break;
-
-                    case 2:
-                       
-                        break;
-
-                    case 3:
-                     
-                        break;
-                    default:
-                        System.out.println("Wrong input. Please choose number between 1-3");
-                        break;
+    public void ownerApp() {
+        this.date = LocalDate.now();
+        boolean loop = true;
+        boolean login = false;
+        while (loop) {
+            while (login == false) {
+                login = owLogin();
+                if (login == false) {
+                    return;
                 }
             }
+
+            System.out.println("------------------");
+            System.out.println("Please select number");
+            System.out.println("1. Sell");
+            System.out.println("2. Add drink");
+            System.out.println("3. Edit drink");
+            System.out.println("4. Delete drink");
+            System.out.println("5. Check sale history");
+            System.out.println("------------------");
+            int num = sc.nextInt();
+            sc.nextLine();
+            switch (num) {
+                case 1:
+                    if (orders.length == 0) {
+                        this.orders = new Order[1];
+                        this.orders[this.orders.length - 1] = new Order(this.orders.length, null,
+                                this.drinkDb,
+                                null);
+                        this.orders[this.orders.length - 1].ordering();
+
+                    } else {
+                        Order[] newOrders = new Order[this.orders.length + 1];
+                        for (int i = 0; i < this.orders.length; i++) {
+                            newOrders[i] = this.orders[i];
+                        }
+                        newOrders[newOrders.length - 1] = new Order(newOrders.length, null,
+                                this.drinkDb, null);
+                        this.orders = newOrders;
+                        this.orders[this.orders.length - 1].ordering();
+                    }
+
+                    break;
+
+                case 2:
+
+                    break;
+
+                case 3:
+
+                    break;
+                default:
+                    System.out.println("Wrong input. Please choose number between 1-3");
+                    break;
+            }
+        }
     }
 
     public boolean owLogin() {

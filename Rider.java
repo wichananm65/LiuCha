@@ -1,5 +1,5 @@
 
-public class Rider extends Person{
+public class Rider extends Person {
     private String phone;
     private double income;
     private String vehicle;
@@ -17,22 +17,23 @@ public class Rider extends Person{
         return phone;
     }
 
-    public double getIncome(){
+    public double getIncome() {
         return income;
     }
-    public String getVehicle(){
+
+    public String getVehicle() {
         return vehicle;
     }
 
-    public String getRegistration(){
+    public String getRegistration() {
         return registration;
     }
 
-    public void updateIncome(int money){
+    public void updateIncome(int money) {
         this.income = this.income + money;
     }
 
-    public void showRider(){
+    public void showRider() {
         System.out.println("Rider");
         System.out.println("Rider name: " + getName());
         System.out.println("Rider phone: " + getPhone());

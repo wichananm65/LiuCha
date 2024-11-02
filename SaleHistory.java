@@ -1,13 +1,13 @@
 import java.time.LocalDate;
 
 public class SaleHistory {
-    //attribute
+    // attribute
     private int saId;
     private double sales;
     private int receiptCount;
     private LocalDate date;
-    
-    //composition
+
+    // composition
     private Receipt[] receipts;
 
     public SaleHistory(LocalDate date) {
@@ -17,24 +17,23 @@ public class SaleHistory {
         this.date = LocalDate.now();
     }
 
-    public int getSaId(){
+    public int getSaId() {
         return saId;
     }
 
-    public double getSales(){
+    public double getSales() {
         return sales;
     }
 
-    public LocalDate getDate(){
+    public LocalDate getDate() {
         return date;
     }
 
-    public void saveReceipt(Receipt receipt){
-        if(this.receipts.length == 0){
+    public void saveReceipt(Receipt receipt) {
+        if (this.receipts.length == 0) {
             this.receipts = new Receipt[1];
             this.receipts[0] = receipt;
-        }
-        else{
+        } else {
             Receipt[] newReceipts = new Receipt[this.receipts.length + 1];
 
             for (int i = 0; i < this.receipts.length; i++) {
@@ -46,12 +45,12 @@ public class SaleHistory {
         }
         this.sales = this.sales + receipt.getTotalPrice();
     }
-    
-    public void showSaleHistory(){
+
+    public void showSaleHistory() {
         System.out.println("--------------------");
         System.out.println("Sales of " + date);
-        for(int i=0;i<receipts.length;i++){
-            if(receipts[i] != null){
+        for (int i = 0; i < receipts.length; i++) {
+            if (receipts[i] != null) {
                 receipts[i].showReceipt();
             }
         }
