@@ -34,8 +34,8 @@ public class Rider extends Person{
 
     public void showRider(){
         System.out.println("Rider");
-        System.out.println("Name: " + getName());
-        System.out.println("Phone: " + getPhone());
+        System.out.println("Rider name: " + getName());
+        System.out.println("Rider phone: " + getPhone());
         System.out.println("Vehicle: " + getVehicle());
         System.out.println("Registration: " + getRegistration());
     }

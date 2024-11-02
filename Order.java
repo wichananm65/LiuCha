@@ -22,7 +22,7 @@ public class Order {
         this.oId = oId;
         this.customer = customer;
         this.payment = payment;
-        this.rider = rider;
+        this.rider = null;
         this.drinkDb = drinkDb;
 
         date = LocalDate.now();
@@ -177,7 +177,13 @@ public class Order {
             System.out
                     .println(i + 1 + ". " + orderedDrinks[i].getDName() + " Topping: " + orderedDrinks[i].getTopping() +
                             " Sweetness: " + orderedDrinks[i].getSweetness()
-                            + " " + orderedDrinks[i].getPrice() + " Baht" + "\n" + getStatus());
+                            + " " + orderedDrinks[i].getPrice() + " Baht");
+        }
+        if(this.rider!=null){
+            rider.showRider();
+        }
+        else{
+            System.out.println("Waiting rider to receive");
         }
 
     }

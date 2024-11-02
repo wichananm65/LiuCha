@@ -11,6 +11,7 @@ public class Cafe {
     private DrinksDatabase drinkDb;
     private Payment[] payments;
     private SaleHistory[] saleHistories;
+    private Owner owner;
 
     private Scanner sc;
     private LocalDate date;
@@ -24,6 +25,7 @@ public class Cafe {
         this.payments = new Payment[3];
         this.saleHistories = new SaleHistory[1];
         this.saleHistories[0] = new SaleHistory(LocalDate.now());
+        this.owner = new Owner(100000, "Liu", "123456");
 
         customers = new Customer[2];
         customers[0] = new Customer(1, "Wichanan", "123456", "0123456789");
@@ -51,7 +53,7 @@ public class Cafe {
                     customerApp();
                     break;
                 case 2:
-                    saleHistories[saleHistories.length-1].showSaleHistory();
+                    ownerApp();
                     break;
                 case 3:
                     riderApp();
@@ -68,22 +70,26 @@ public class Cafe {
         while (loop) {
             while (login == false) {
                 login = cusLogin();
+                if (login == false) {
+                    return;
+                }
             }
-            System.out.println("-----------------------");
-            System.out.println("Please select number");
-            System.out.println("1. Place order");
-            System.out.println("2. Canel order");
-            System.out.println("3. Check receipt");
-            System.out.println("4. Check order status");
-            System.out.println("5. Exit");
-            System.out.println("-----------------------");
+            System.out.println("----------------------");
+            System.out.println("Please select number |");
+            System.out.println("1. Place order       |");
+            System.out.println("2. Canel order       |");
+            System.out.println("3. Check receipt     |");
+            System.out.println("4. Check order status|");
+            System.out.println("5. Exit              |");
+            System.out.println("----------------------");
             int num = sc.nextInt();
             sc.nextLine();
             switch (num) {
                 case 1:
                     if (orders.length == 0) {
                         this.orders = new Order[1];
-                        this.orders[this.orders.length - 1] = new Order(this.orders.length, customers[currentCus], this.drinkDb,
+                        this.orders[this.orders.length - 1] = new Order(this.orders.length, customers[currentCus],
+                                this.drinkDb,
                                 null);
                         this.orders[this.orders.length - 1].ordering();
                         System.out.println("Enter your bankaccount");
@@ -108,7 +114,8 @@ public class Cafe {
                         for (int i = 0; i < this.orders.length; i++) {
                             newOrders[i] = this.orders[i];
                         }
-                        newOrders[newOrders.length - 1] = new Order(newOrders.length, customers[currentCus], this.drinkDb, null);
+                        newOrders[newOrders.length - 1] = new Order(newOrders.length, customers[currentCus],
+                                this.drinkDb, null);
                         this.orders = newOrders;
                         this.orders[this.orders.length - 1].ordering();
                         System.out.println("Enter your bankaccount");
@@ -152,7 +159,8 @@ public class Cafe {
                         System.out.println("Not has that order");
                     } else {
                         System.out.println("Order " + oIdSelect);
-                        System.out.println("Status " + this.orders[oIdSelect - 1].getStatus());
+                        this.orders[oIdSelect - 1].showOrder();
+                        System.out.println("Status: " + this.orders[oIdSelect - 1].getStatus());
                     }
                     break;
 
@@ -177,7 +185,7 @@ public class Cafe {
         String password = sc.nextLine();
         authenticate = authenticateCus(phone, password);
         if (authenticate == true) {
-            
+
             System.out.println("Welcome " + customers[currentCus].getName());
             return true;
         } else {
@@ -208,6 +216,9 @@ public class Cafe {
         while (loop) {
             while (login == false) {
                 login = riLogin();
+                if (login == false) {
+                    return;
+                }
             }
             int inProgressNum = 0;
             int deliveringNum = 0;
@@ -281,15 +292,14 @@ public class Cafe {
                         for (int i = 0; i < orders.length; i++) {
                             if (select == orders[i].getOId()) {
                                 orders[i].delivered();
-                                for(int k=0;i<customers.length;k++){
-                                    if(orders[i].getCustomer()==customers[k]){
+                                for (int k = 0; i < customers.length; k++) {
+                                    if (orders[i].getCustomer() == customers[k]) {
                                         customers[k].addReceipt(orders[i].getReceipt());
-                                        if(saleHistories[saleHistories.length-1].getDate().equals(date)){
-                                            saleHistories[saleHistories.length-1].saveReceipt(orders[i].getReceipt());
-                                        }
-                                        else{
-                                            SaleHistory newSaleHistory[] = new SaleHistory[saleHistories.length+1];
-                                            for(int j=0;j<saleHistories.length;j++){
+                                        if (saleHistories[saleHistories.length - 1].getDate().equals(date)) {
+                                            saleHistories[saleHistories.length - 1].saveReceipt(orders[i].getReceipt());
+                                        } else {
+                                            SaleHistory newSaleHistory[] = new SaleHistory[saleHistories.length + 1];
+                                            for (int j = 0; j < saleHistories.length; j++) {
                                                 newSaleHistory[j] = saleHistories[j];
                                             }
                                             newSaleHistory[saleHistories.length] = new SaleHistory(date);
@@ -337,4 +347,66 @@ public class Cafe {
         }
     }
 
+    public void ownerApp(){
+            this.date = LocalDate.now();
+            boolean loop = true;
+            boolean login = false;
+            while (loop) {
+                while (login == false) {
+                    login = owLogin();
+                    if(login == false){
+                        return;
+                    }
+                }
+         
+                System.out.println("------------------");
+                System.out.println("Please select number");
+                System.out.println("1. Receieve Order");
+                System.out.println("2. Deliver Order");
+                System.out.println("3. Exit");
+                System.out.println("------------------");
+                int num = sc.nextInt();
+                sc.nextLine();
+                switch (num) {
+                    case 1:
+
+                        break;
+
+                    case 2:
+                       
+                        break;
+
+                    case 3:
+                     
+                        break;
+                    default:
+                        System.out.println("Wrong input. Please choose number between 1-3");
+                        break;
+                }
+            }
+    }
+
+    public boolean owLogin() {
+        System.out.println("Please enter your id");
+        int id = sc.nextInt();
+        sc.nextLine();
+        System.out.println("please enter your password");
+        String password = sc.nextLine();
+        boolean authenticate = authenticateOw(id, password);
+        if (authenticate == true) {
+            System.out.println("Welcome " + owner.getName());
+            return true;
+        } else {
+            System.out.println("Wrong id or password. Please try again");
+            return false;
+        }
+    }
+
+    public boolean authenticateOw(int id, String password) {
+        if ((id == owner.getId()) && (password.equals(owner.getPassword()))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

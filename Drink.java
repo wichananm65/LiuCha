@@ -122,7 +122,7 @@ public class Drink {
                     loop = false;
                     break;
                 case 2:
-                    this.sweetness = "Little Swee";
+                    this.sweetness = "Little Sweet";
                     loop = false;
                     break;
                 case 3:
