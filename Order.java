@@ -14,6 +14,7 @@ public class Order {
     private Drink[] orderedDrinks;
     private Payment payment;
     private Rider rider;
+    private Receipt receipt;
 
     private Scanner sc;
 
@@ -62,23 +63,34 @@ public class Order {
         }
     }
 
-    public void cancelOrder(){
-        if(this.status == "In progress"){
+    public void cancelOrder() {
+        this.receipt = null;
+        if (this.status == "In progress") {
             this.status = "Canceled";
             System.out.println("Order cancel sucessfully");
-        }
-        else{
+        } else {
             System.out.println("Can not cancel order");
         }
-        
+
     }
 
-    public void delivering(){
+    public void delivering() {
         this.status = "Delivering";
     }
 
-    public void delivered(){
+    public void delivered() {
         this.status = "Delivered";
+        String detail = "Order + \nCustomer name: " + customer.getName() + "\nPhone: " + customer.getPhone();
+        for (int i = 0; i < orderedDrinks.length; i++) {
+            detail = detail + "\n" + orderedDrinks[i].getDName() + " Topping: " + orderedDrinks[i].getTopping() +
+                    " Sweetness: " + orderedDrinks[i].getSweetness()
+                    + " " + orderedDrinks[i].getPrice() + " Baht";
+        }
+        this.receipt = new Receipt(oId, detail, totalPrice);
+    }
+
+    public Receipt getReceipt() {
+        return receipt;
     }
 
     public int getOId() {
@@ -93,7 +105,7 @@ public class Order {
         return rider;
     }
 
-    public Customer getCustomer(){
+    public Customer getCustomer() {
         return customer;
     }
 
@@ -101,15 +113,15 @@ public class Order {
         return totalPrice;
     }
 
-    public String getStatus(){
+    public String getStatus() {
         return this.status;
     }
 
-    public void setStatus(String status){
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public void setRider(Rider rider){
+    public void setRider(Rider rider) {
         this.rider = rider;
     }
 
@@ -131,10 +143,10 @@ public class Order {
                     selectedDrink.getPrice());
             this.orderedDrinks = newOrderedDrinks;
         }
-        
-        this.orderedDrinks[this.orderedDrinks.length-1].setTopping();
-        this.orderedDrinks[this.orderedDrinks.length-1].setSweetness();
-        
+
+        this.orderedDrinks[this.orderedDrinks.length - 1].setTopping();
+        this.orderedDrinks[this.orderedDrinks.length - 1].setSweetness();
+
     }
 
     public void deleteOrderedDrink(int num) {

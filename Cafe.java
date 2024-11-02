@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.time.LocalDate;
 
 public class Cafe {
     private boolean authenticate;
@@ -9,8 +10,10 @@ public class Cafe {
     private Order[] orders;
     private DrinksDatabase drinkDb;
     private Payment[] payments;
+    private SaleHistory[] saleHistories;
 
     private Scanner sc;
+    private LocalDate date;
 
     public Cafe() {
         this.authenticate = false;
@@ -19,6 +22,8 @@ public class Cafe {
         this.drinkDb = new DrinksDatabase();
         this.orders = new Order[0];
         this.payments = new Payment[3];
+        this.saleHistories = new SaleHistory[1];
+        this.saleHistories[0] = new SaleHistory(LocalDate.now());
 
         customers = new Customer[2];
         customers[0] = new Customer(1, "Wichanan", "123456", "0123456789");
@@ -45,7 +50,9 @@ public class Cafe {
                 case 1:
                     customerApp();
                     break;
-
+                case 2:
+                    saleHistories[saleHistories.length-1].showSaleHistory();
+                    break;
                 case 3:
                     riderApp();
                 default:
@@ -147,6 +154,7 @@ public class Cafe {
                         System.out.println("Order " + oIdSelect);
                         System.out.println("Status " + this.orders[oIdSelect - 1].getStatus());
                     }
+                    break;
 
                 case 5:
                     authenticate = false;
@@ -193,6 +201,7 @@ public class Cafe {
     }
 
     public void riderApp() {
+        this.date = LocalDate.now();
         boolean loop = true;
         boolean login = false;
         int select;
@@ -274,7 +283,18 @@ public class Cafe {
                                 orders[i].delivered();
                                 for(int k=0;i<customers.length;k++){
                                     if(orders[i].getCustomer()==customers[k]){
-                                        customers[k].addReceipt(orders[i]);
+                                        customers[k].addReceipt(orders[i].getReceipt());
+                                        if(saleHistories[saleHistories.length-1].getDate().equals(date)){
+                                            saleHistories[saleHistories.length-1].saveReceipt(orders[i].getReceipt());
+                                        }
+                                        else{
+                                            SaleHistory newSaleHistory[] = new SaleHistory[saleHistories.length+1];
+                                            for(int j=0;j<saleHistories.length;j++){
+                                                newSaleHistory[j] = saleHistories[j];
+                                            }
+                                            newSaleHistory[saleHistories.length] = new SaleHistory(date);
+                                            saleHistories = newSaleHistory;
+                                        }
                                         break;
                                     }
                                 }

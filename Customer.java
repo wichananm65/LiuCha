@@ -29,10 +29,10 @@ public class Customer extends Person{
         
     }
 
-    public void addReceipt(Order order){
+    public void addReceipt(Receipt receipt){
         if (this.receipts.length == 0) {
             this.receipts = new Receipt[1];
-            this.receipts[0] = new Receipt(order);
+            this.receipts[0] = receipt;
         } else {
             Receipt[] newReceipts = new Receipt[this.receipts.length + 1];
 
@@ -40,7 +40,7 @@ public class Customer extends Person{
                 newReceipts[i] = this.receipts[i];
             }
 
-            newReceipts[this.receipts.length] = new Receipt(order);
+            newReceipts[this.receipts.length] = receipt;
             this.receipts = newReceipts;
         }
     }
