@@ -62,13 +62,16 @@ public class DrinksDatabase {
         drinksCount = drinks.length;
     }
 
-    public void editDrink(int dId, String dName, double price) {
-        if (dName != null) {
-            drinks[dId - 1].setDName(dName);
-        }
-        if (price != 0) {
-            drinks[dId - 1].setPrice(price);
-        }
+    public void editDrink() {
+        showAllDrinks();
+        System.out.println("Choose drink to edit by number");
+        int dId = sc.nextInt();
+        System.out.println("Enter drink name");
+        String dName = sc.next();
+        System.out.println("Enter drink price");
+        double price = sc.nextDouble();
+        drinks[dId - 1].setDName(dName);
+        drinks[dId - 1].setPrice(price);
         System.out.println("Successfully Edit " + this.drinks[dId - 1].showDrink());
     }
 

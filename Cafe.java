@@ -421,7 +421,7 @@ public class Cafe {
                     break;
 
                 case 3:
-
+                    drinkDb.editDrink();
                     break;
 
                 case 4:
