@@ -423,6 +423,10 @@ public class Cafe {
                 case 3:
 
                     break;
+
+                case 4:
+                    drinkDb.deleteDrink();
+                    break;
                 default:
                     System.out.println("Wrong input. Please choose number between 1-3");
                     break;

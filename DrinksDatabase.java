@@ -40,7 +40,10 @@ public class DrinksDatabase {
 
     }
 
-    public void deleteDrink(int dId) {
+    public void deleteDrink() {
+        showAllDrinks();
+        System.out.println("Choose drink to delete by number");
+        int dId = sc.nextInt();
         if (this.drinks == null) {
             System.out.println("Database is empty");
         } else if (dId < 0 || dId >= this.drinks.length) {
