@@ -106,9 +106,9 @@ public class Drink {
         Scanner sc = new Scanner(System.in);
         System.out.println("Select your Sweetness by number");
         System.out.println("1. None");
-        System.out.println("2. Little Sweet");
+        System.out.println("2. Little");
         System.out.println("3. Regular");
-        System.out.println("4. Very Sweet");
+        System.out.println("4. Very");
 
         boolean loop = true;
         int sweetnessNum;
@@ -120,7 +120,7 @@ public class Drink {
                     loop = false;
                     break;
                 case 2:
-                    this.sweetness = "Little Sweet";
+                    this.sweetness = "Little";
                     loop = false;
                     break;
                 case 3:
@@ -128,7 +128,7 @@ public class Drink {
                     loop = false;
                     break;
                 case 4:
-                    this.sweetness = "Very Sweet";
+                    this.sweetness = "Very";
                     loop = false;
                     break;
                 default:

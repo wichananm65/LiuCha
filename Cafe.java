@@ -28,6 +28,7 @@ public class Cafe {
         customers = new Customer[2];
         customers[0] = new Customer(1, "Wichanan", "123456", "0123456789");
         customers[1] = new Customer(2, "Somsak", "1", "1");
+        customers[1].addPoint(10);
 
         payments[0] = new Payment("1234567890", 1000);
         payments[1] = new Payment("1111111111", 20);
@@ -78,7 +79,8 @@ public class Cafe {
             System.out.println("2. Canel order       |");
             System.out.println("3. Check receipt     |");
             System.out.println("4. Check order status|");
-            System.out.println("5. Exit              |");
+            System.out.println("5. Use points        |");
+            System.out.println("6. Exit              |");
             System.out.println("----------------------");
             int num = sc.nextInt();
             sc.nextLine();
@@ -163,12 +165,37 @@ public class Cafe {
                     break;
 
                 case 5:
+                    System.out.println("You have " + customers[currentCus].getPoints() + " points");
+                    if (customers[currentCus].getPoints() >= 10) {
+                        customers[currentCus].usePoint();
+                        if (orders.length == 0) {
+                            this.orders = new Order[1];
+                            this.orders[this.orders.length - 1] = new Order(this.orders.length, customers[currentCus],
+                                    this.drinkDb,
+                                    null);
+                            this.orders[this.orders.length - 1].ordering(true);
+                        } else {
+                            Order[] newOrders = new Order[this.orders.length + 1];
+                            for (int i = 0; i < this.orders.length; i++) {
+                                newOrders[i] = this.orders[i];
+                            }
+                            newOrders[newOrders.length - 1] = new Order(newOrders.length, customers[currentCus],
+                                    this.drinkDb, null);
+                            this.orders = newOrders;
+                            this.orders[this.orders.length - 1].ordering(true);
+                        }
+                    } else {
+                        System.out.println("You have not enough points");
+                    }
+                    break;
+
+                case 6:
                     authenticate = false;
                     loop = false;
                     break;
 
                 default:
-                    System.out.println("Wrong input. Please choose number between 1-5");
+                    System.out.println("Wrong input. Please choose number between 1-6");
                     break;
 
             }
@@ -289,7 +316,7 @@ public class Cafe {
                         for (int i = 0; i < orders.length; i++) {
                             if (select == orders[i].getOId()) {
                                 orders[i].delivered();
-                                owner.updateIncome(orders[i].getReceipt().getTotalPrice()-10);
+                                owner.updateIncome(orders[i].getReceipt().getTotalPrice() - 10);
                                 for (int k = 0; i < customers.length; k++) {
                                     if (orders[i].getCustomer() == customers[k]) {
                                         customers[k].addReceipt(orders[i].getReceipt());
@@ -390,7 +417,7 @@ public class Cafe {
                         this.orders[this.orders.length - 1].ordering();
                     }
                     this.orders[this.orders.length - 1].delivered();
-                    owner.updateIncome(this.orders[this.orders.length-1].getReceipt().getTotalPrice());
+                    owner.updateIncome(this.orders[this.orders.length - 1].getReceipt().getTotalPrice());
                     if (saleHistories[saleHistories.length - 1].getDate().equals(LocalDate.now())) {
                         saleHistories[saleHistories.length - 1]
                                 .saveReceipt(this.orders[this.orders.length - 1].getReceipt());
@@ -434,11 +461,11 @@ public class Cafe {
                     break;
 
                 case 6:
-                    checkSaleHistory();
+                    System.out.println("Your income is " + owner.getIncome() + " Baht");
                     break;
 
                 case 7:
-                    System.out.println("Your income is " + owner.getIncome() + " Baht");
+                    loop = false;
                     break;
 
                 default:

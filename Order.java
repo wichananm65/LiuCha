@@ -63,6 +63,29 @@ public class Order {
         }
     }
 
+    public void ordering(boolean isFree) {
+        if (isFree == true) {
+
+        }
+        boolean ordering = true;
+        while (ordering == true) {
+            drinkDb.showAllDrinks();
+            System.out.println("Select your drink by number");
+            int num = sc.nextInt();
+            if (num > 0 && num <= drinkDb.getDrinksCount()) {
+                addOrderedDrink(num);
+                this.totalPrice = this.totalPrice + orderedDrinks[orderedDrinks.length - 1].getPrice();
+                System.out.println("You use points for");
+                System.out.println(orderedDrinks[0].getDName() + " " + orderedDrinks[0].getTopping() + " "
+                        + orderedDrinks[0].getSweetness() + " sweet " + orderedDrinks[0].getPrice() + " Baht");
+                this.totalPrice = 0 - this.totalPrice;
+                ordering = false;
+            } else {
+                System.out.println("Please select number in menu");
+            }
+        }
+    }
+
     public void cancelOrder() {
         this.receipt = null;
         if (this.status == "In progress") {
@@ -81,10 +104,10 @@ public class Order {
     public void delivered() {
         this.status = "Delivered";
         String detail = "";
-        if(customer!=null){
-            detail = "Order + \nCustomer name: " + customer.getName() + "\nPhone: " + customer.getPhone();
+        if (customer != null) {
+            detail = "Order \nCustomer name: " + customer.getName() + "\nPhone: " + customer.getPhone();
         }
-        
+
         for (int i = 0; i < orderedDrinks.length; i++) {
             detail = detail + "\n" + orderedDrinks[i].getDName() + " Topping: " + orderedDrinks[i].getTopping() +
                     " Sweetness: " + orderedDrinks[i].getSweetness()
@@ -121,7 +144,7 @@ public class Order {
         return this.status;
     }
 
-    public Drink[] getOrderedDrinks(){
+    public Drink[] getOrderedDrinks() {
         return orderedDrinks;
     }
 

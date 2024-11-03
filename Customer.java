@@ -1,10 +1,10 @@
 
-public class Customer extends Person{
-    //attribute
+public class Customer extends Person {
+    // attribute
     private String phone;
     private int points;
 
-    //composition
+    // composition
     private Receipt receipts[];
 
     public Customer(int id, String name, String password, String phone) {
@@ -17,23 +17,22 @@ public class Customer extends Person{
         return phone;
     }
 
-    public int getPoints(){
+    public int getPoints() {
         return points;
-    } 
-
-    public void showCustomerReceipts(){
-        if(receipts.length>0){
-            for(int i=0;i<receipts.length;i++){
-                receipts[i].showReceipt();
-            }
-        }
-        else{
-            System.out.println("Not has receipt");
-        }
-        
     }
 
-    public void addReceipt(Receipt receipt){
+    public void showCustomerReceipts() {
+        if (receipts.length > 0) {
+            for (int i = 0; i < receipts.length; i++) {
+                receipts[i].showReceipt();
+            }
+        } else {
+            System.out.println("Not has receipt");
+        }
+
+    }
+
+    public void addReceipt(Receipt receipt) {
         if (this.receipts.length == 0) {
             this.receipts = new Receipt[1];
             this.receipts[0] = receipt;
@@ -49,7 +48,11 @@ public class Customer extends Person{
         }
     }
 
-    public void addPoint(int num){
-         this.points = this.points + num;
+    public void addPoint(int num) {
+        this.points = this.points + num;
+    }
+
+    public void usePoint(){
+        this.points = this.points-10;
     }
 }
