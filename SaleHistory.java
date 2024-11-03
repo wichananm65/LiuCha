@@ -3,7 +3,7 @@ import java.time.LocalDate;
 public class SaleHistory {
     // attribute
     private int saId;
-    private double sales;
+    private double sale;
     private int receiptCount;
     private LocalDate date;
 
@@ -11,7 +11,7 @@ public class SaleHistory {
     private Receipt[] receipts;
 
     public SaleHistory(LocalDate date) {
-        sales = 0;
+        sale = 0;
         this.receipts = new Receipt[10];
         this.receiptCount = 0;
         this.date = LocalDate.now();
@@ -21,8 +21,8 @@ public class SaleHistory {
         return saId;
     }
 
-    public double getSales() {
-        return sales;
+    public double getSale() {
+        return sale;
     }
 
     public LocalDate getDate() {
@@ -43,7 +43,7 @@ public class SaleHistory {
             newReceipts[this.receipts.length] = receipt;
             this.receipts = newReceipts;
         }
-        this.sales = this.sales + receipt.getTotalPrice();
+        this.sale = this.sale + receipt.getTotalPrice();
     }
 
     public void showSaleHistory() {
@@ -54,6 +54,7 @@ public class SaleHistory {
                 receipts[i].showReceipt();
             }
         }
+        System.out.println("Total sale is " + sale);
         System.out.println("--------------------");
     }
 }

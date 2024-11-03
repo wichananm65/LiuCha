@@ -17,7 +17,6 @@ public class Cafe {
 
     public Cafe() {
         this.authenticate = false;
-        this.currentRi = new Rider(0, null, null, null, null, null);
         this.riDb = new RiderDatabase();
         this.drinkDb = new DrinksDatabase();
         this.orders = new Order[0];
@@ -285,10 +284,12 @@ public class Cafe {
                     System.out.println("------------------");
                     System.out.println("Select Order ID");
                     select = sc.nextInt();
+                    currentRi.updateIncome(10);
                     if ((select <= orders.length && (select > 0))) {
                         for (int i = 0; i < orders.length; i++) {
                             if (select == orders[i].getOId()) {
                                 orders[i].delivered();
+                                owner.updateIncome(orders[i].getReceipt().getTotalPrice()-10);
                                 for (int k = 0; i < customers.length; k++) {
                                     if (orders[i].getCustomer() == customers[k]) {
                                         customers[k].addReceipt(orders[i].getReceipt());
@@ -357,14 +358,16 @@ public class Cafe {
                 }
             }
 
-            System.out.println("------------------");
-            System.out.println("Please select number");
-            System.out.println("1. Sell");
-            System.out.println("2. Add drink");
-            System.out.println("3. Edit drink");
-            System.out.println("4. Delete drink");
-            System.out.println("5. Check sale history");
-            System.out.println("------------------");
+            System.out.println("----------------------");
+            System.out.println("Please select number |");
+            System.out.println("1. Sell              |");
+            System.out.println("2. Add drink         |");
+            System.out.println("3. Edit drink        |");
+            System.out.println("4. Delete drink      |");
+            System.out.println("5. Check sale history|");
+            System.out.println("6. Check income      |");
+            System.out.println("7. Exit              |");
+            System.out.println("----------------------");
             int num = sc.nextInt();
             sc.nextLine();
             switch (num) {
@@ -387,6 +390,7 @@ public class Cafe {
                         this.orders[this.orders.length - 1].ordering();
                     }
                     this.orders[this.orders.length - 1].delivered();
+                    owner.updateIncome(this.orders[this.orders.length-1].getReceipt().getTotalPrice());
                     if (saleHistories[saleHistories.length - 1].getDate().equals(LocalDate.now())) {
                         saleHistories[saleHistories.length - 1]
                                 .saveReceipt(this.orders[this.orders.length - 1].getReceipt());
@@ -429,6 +433,14 @@ public class Cafe {
                     checkSaleHistory();
                     break;
 
+                case 6:
+                    checkSaleHistory();
+                    break;
+
+                case 7:
+                    System.out.println("Your income is " + owner.getIncome() + " Baht");
+                    break;
+
                 default:
                     System.out.println("Wrong input. Please choose number between 1-3");
                     break;
@@ -466,15 +478,14 @@ public class Cafe {
         return phone;
     }
 
-    public void checkSaleHistory(){
+    public void checkSaleHistory() {
         System.out.println("Enter date (YYYY-MM-DD)");
         String selectDate = sc.next();
-        for(int i=0;i<saleHistories.length;i++){
-            if(saleHistories[i].getDate().toString().equals(selectDate)){
+        for (int i = 0; i < saleHistories.length; i++) {
+            if (saleHistories[i].getDate().toString().equals(selectDate)) {
                 saleHistories[i].showSaleHistory();
                 break;
-            }
-            else if((i==saleHistories.length-1)&&(!saleHistories[i].getDate().toString().equals(selectDate))){
+            } else if ((i == saleHistories.length - 1) && (!saleHistories[i].getDate().toString().equals(selectDate))) {
                 System.out.println("Not has sale that day");
             }
         }

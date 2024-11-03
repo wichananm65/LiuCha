@@ -29,7 +29,7 @@ public class Rider extends Person {
         return registration;
     }
 
-    public void updateIncome(int money) {
+    public void updateIncome(double money) {
         this.income = this.income + money;
     }
 

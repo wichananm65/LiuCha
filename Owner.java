@@ -1,27 +1,18 @@
 
 public class Owner extends Person {
+    private double income;
 
-    private Drink[] drinks;
-    private SaleHistory[] saleHistory;
 
     public Owner(int id, String name, String password) {
         super(id, name, password);
-        this.drinks = drinks;
+        this.income = 2000;
     }
 
-    public String getName() {
-        return name;
+    public double getIncome(){
+        return income;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String showAllDrinks() {
-        String text = "";
-        for (int i = 0; i < drinks.length; i++) {
-            text = text + i + "." + drinks[i].showDrink() + "\n";
-        }
-        return text;
+    public void updateIncome(double money) {
+        this.income = this.income + money;
     }
 }
