@@ -294,9 +294,7 @@ public class Cafe {
                                 for (int k = 0; i < customers.length; k++) {
                                     if (orders[i].getCustomer() == customers[k]) {
                                         customers[k].addReceipt(orders[i].getReceipt());
-                                        System.out.println("ordered"+orders[i].getOrderedDrinks().length);
                                         customers[k].addPoint(orders[i].getOrderedDrinks().length);
-                                        System.out.println(customers[k].getPoints());
                                         if (saleHistories[saleHistories.length - 1].getDate().equals(date)) {
                                             saleHistories[saleHistories.length - 1].saveReceipt(orders[i].getReceipt());
                                         } else {
@@ -419,7 +417,7 @@ public class Cafe {
                     break;
 
                 case 2:
-
+                    drinkDb.addDrink();
                     break;
 
                 case 3:

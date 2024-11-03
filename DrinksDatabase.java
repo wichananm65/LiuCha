@@ -1,6 +1,9 @@
+import java.util.Scanner;
+
 public class DrinksDatabase {
     private Drink[] drinks;
     private int drinksCount;
+    private Scanner sc;
 
     public DrinksDatabase() {
         drinks = new Drink[5];
@@ -10,20 +13,31 @@ public class DrinksDatabase {
         drinks[3] = new Drink(4, "Matcha", 20);
         drinks[4] = new Drink(5, "Milk Tea", 20);
         drinksCount = drinks.length;
+        sc = new Scanner(System.in);
     }
 
     public int getDrinksCount() {
         return this.drinksCount;
     }
 
-    public void addDrink(String dName, double price) {
-        Drink newDrinks[] = new Drink[this.drinks.length + 1];
-        for (int i = 0; i < this.drinks.length; i++) {
-            newDrinks[i] = this.drinks[i];
+    public void addDrink() {
+        System.out.println("Enter drink name");
+        String dName = sc.nextLine();
+        System.out.println("Enter price");
+        double price = sc.nextDouble();
+        if (drinks.length == 0) {
+            drinks = new Drink[1];
+            drinks[0] = new Drink(drinks.length, dName, price);
+        } else {
+            Drink newDrinks[] = new Drink[this.drinks.length + 1];
+            for (int i = 0; i < this.drinks.length; i++) {
+                newDrinks[i] = this.drinks[i];
+            }
+            newDrinks[this.drinks.length] = new Drink(newDrinks.length, dName, price);
+            this.drinks = newDrinks;
+            this.drinksCount = drinks.length;
         }
-        newDrinks[this.drinks.length] = new Drink(drinksCount, dName, price);
-        this.drinks = newDrinks;
-        this.drinksCount = drinks.length;
+
     }
 
     public void deleteDrink(int dId) {
