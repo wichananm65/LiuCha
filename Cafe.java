@@ -179,8 +179,7 @@ public class Cafe {
     }
 
     public boolean cusLogin() {
-        System.out.println("Please enter your phone number");
-        String phone = sc.nextLine();
+        String phone = fillPhoneNum();
         System.out.println("please enter your password");
         String password = sc.nextLine();
         authenticate = authenticateCus(phone, password);
@@ -295,6 +294,9 @@ public class Cafe {
                                 for (int k = 0; i < customers.length; k++) {
                                     if (orders[i].getCustomer() == customers[k]) {
                                         customers[k].addReceipt(orders[i].getReceipt());
+                                        System.out.println("ordered"+orders[i].getOrderedDrinks().length);
+                                        customers[k].addPoint(orders[i].getOrderedDrinks().length);
+                                        System.out.println(customers[k].getPoints());
                                         if (saleHistories[saleHistories.length - 1].getDate().equals(date)) {
                                             saleHistories[saleHistories.length - 1].saveReceipt(orders[i].getReceipt());
                                         } else {
@@ -304,6 +306,8 @@ public class Cafe {
                                             }
                                             newSaleHistory[saleHistories.length] = new SaleHistory(date);
                                             saleHistories = newSaleHistory;
+                                            saleHistories[saleHistories.length - 1]
+                                                    .saveReceipt(this.orders[this.orders.length - 1].getReceipt());
                                         }
                                         break;
                                     }
@@ -332,8 +336,7 @@ public class Cafe {
     }
 
     public boolean riLogin() {
-        System.out.println("Please enter your phone number");
-        String phone = sc.nextLine();
+        String phone = fillPhoneNum();
         System.out.println("please enter your password");
         String password = sc.nextLine();
         authenticate = riDb.authenticate(phone, password);
@@ -388,6 +391,30 @@ public class Cafe {
                         this.orders = newOrders;
                         this.orders[this.orders.length - 1].ordering();
                     }
+                    this.orders[this.orders.length - 1].delivered();
+                    if (saleHistories[saleHistories.length - 1].getDate().equals(date)) {
+                        saleHistories[saleHistories.length - 1]
+                                .saveReceipt(this.orders[this.orders.length - 1].getReceipt());
+                    } else {
+                        SaleHistory newSaleHistory[] = new SaleHistory[saleHistories.length + 1];
+                        for (int j = 0; j < saleHistories.length; j++) {
+                            newSaleHistory[j] = saleHistories[j];
+                        }
+                        newSaleHistory[saleHistories.length] = new SaleHistory(date);
+                        saleHistories = newSaleHistory;
+                        saleHistories[saleHistories.length - 1]
+                                .saveReceipt(this.orders[this.orders.length - 1].getReceipt());
+                    }
+                    String cusPhone = fillPhoneNum();
+                    for (int i = 0; i < customers.length; i++) {
+                        if (customers[i].getPhone().equals(cusPhone)) {
+                            customers[i].addPoint(this.orders[this.orders.length - 1].getOrderedDrinks().length);
+                            customers[i].addReceipt(this.orders[this.orders.length - 1].getReceipt());
+
+                            break;
+                        }
+
+                    }
 
                     break;
 
@@ -428,4 +455,11 @@ public class Cafe {
             return false;
         }
     }
+
+    public String fillPhoneNum() {
+        System.out.println("Enter phone number");
+        String phone = sc.nextLine();
+        return phone;
+    }
+
 }

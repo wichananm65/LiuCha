@@ -117,6 +117,10 @@ public class Order {
         return this.status;
     }
 
+    public Drink[] getOrderedDrinks(){
+        return orderedDrinks;
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }

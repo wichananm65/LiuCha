@@ -13,9 +13,13 @@ public class Customer extends Person{
         receipts = new Receipt[0];
     }
 
-    public  String getPhone() {
+    public String getPhone() {
         return phone;
     }
+
+    public int getPoints(){
+        return points;
+    } 
 
     public void showCustomerReceipts(){
         if(receipts.length>0){
@@ -43,5 +47,9 @@ public class Customer extends Person{
             newReceipts[this.receipts.length] = receipt;
             this.receipts = newReceipts;
         }
+    }
+
+    public void addPoint(int num){
+         this.points = this.points + num;
     }
 }
