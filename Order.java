@@ -80,7 +80,11 @@ public class Order {
 
     public void delivered() {
         this.status = "Delivered";
-        String detail = "Order + \nCustomer name: " + customer.getName() + "\nPhone: " + customer.getPhone();
+        String detail = "";
+        if(customer!=null){
+            detail = "Order + \nCustomer name: " + customer.getName() + "\nPhone: " + customer.getPhone();
+        }
+        
         for (int i = 0; i < orderedDrinks.length; i++) {
             detail = detail + "\n" + orderedDrinks[i].getDName() + " Topping: " + orderedDrinks[i].getTopping() +
                     " Sweetness: " + orderedDrinks[i].getSweetness()
