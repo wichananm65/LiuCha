@@ -19,9 +19,11 @@ public class Payment {
     public boolean paid(double price) {
         if (this.money < price) {
             System.out.println("Insufficient balance");
+            System.out.println("----------------------------------------");
             return false;
         } else {
             System.out.println("Successfully paid");
+            System.out.println("----------------------------------------");
             this.money = this.money - price;
             return true;
         }

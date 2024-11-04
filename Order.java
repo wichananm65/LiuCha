@@ -35,7 +35,8 @@ public class Order {
             drinkDb.showAllDrinks();
             System.out.println(drinkDb.getDrinksCount() + 1 + ". Cancel a drink");
             System.out.println(drinkDb.getDrinksCount() + 2 + ". Enter order");
-            System.out.println("Select your drink by number");
+            System.out.println("-----------------------------");
+            System.out.println("Select your drink by number |");
             int num = sc.nextInt();
 
             if (num > 0 && num <= drinkDb.getDrinksCount()) {
@@ -71,9 +72,11 @@ public class Order {
             if (num > 0 && num <= drinkDb.getDrinksCount()) {
                 addOrderedDrink(num);
                 this.totalPrice = this.totalPrice + orderedDrinks[orderedDrinks.length - 1].getPrice();
+                System.out.println("----------------------------------------");
                 System.out.println("You use points for");
                 System.out.println(orderedDrinks[0].getDName() + " " + orderedDrinks[0].getTopping() + " "
                         + orderedDrinks[0].getSweetness() + " sweet " + orderedDrinks[0].getPrice() + " Baht");
+                System.out.println("----------------------------------------");
                 this.totalPrice = 0 - this.totalPrice;
                 ordering = false;
             } else {
@@ -195,14 +198,12 @@ public class Order {
     }
 
     public void showOrder() {
-        System.out.println("------------------");
-        System.out.println("Order");
+        System.out.println("----------------------------------------");
+        System.out.println("Order ID: " + getOId());
         if (customer != null) {
             System.out.println("Customer name: " + customer.getName() + " ");
             System.out.println("Phone: " + customer.getPhone());
         }
-
-        System.out.println("Order ID: " + getOId());
         for (int i = 0; i < orderedDrinks.length; i++) {
             System.out
                     .println(i + 1 + ". " + orderedDrinks[i].getDName() + " Topping: " + orderedDrinks[i].getTopping() +
@@ -214,7 +215,7 @@ public class Order {
         } else {
             System.out.println("Waiting rider to receive");
         }
-
+        System.out.println("Total price: " + totalPrice);
     }
 
 }

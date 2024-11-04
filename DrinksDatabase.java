@@ -21,9 +21,10 @@ public class DrinksDatabase {
     }
 
     public void addDrink() {
-        System.out.println("Enter drink name");
+        System.out.println("------------------");
+        System.out.println("Enter drink name |");
         String dName = sc.nextLine();
-        System.out.println("Enter price");
+        System.out.println("Enter price      |");
         double price = sc.nextDouble();
         if (drinks.length == 0) {
             drinks = new Drink[1];
@@ -37,17 +38,20 @@ public class DrinksDatabase {
             this.drinks = newDrinks;
             this.drinksCount = drinks.length;
         }
-
+        System.out.println("------------------");
     }
 
     public void deleteDrink() {
         showAllDrinks();
-        System.out.println("Choose drink to delete by number");
+        System.out.println("----------------------------------");
+        System.out.println("Choose drink to delete by number |");
         int dId = sc.nextInt();
         if (this.drinks == null) {
-            System.out.println("Database is empty");
+            System.out.println("Database is empty                |");
+            System.out.println("----------------------------------");
         } else if (dId < 0 || dId >= this.drinks.length) {
-            System.out.println("Wrong Input. Please try again");
+            System.out.println("Wrong Input. Please try again    |");
+            System.out.println("----------------------------------");
         }
 
         Drink[] newDrinks = new Drink[this.drinks.length - 1];
@@ -72,16 +76,18 @@ public class DrinksDatabase {
         double price = sc.nextDouble();
         drinks[dId - 1].setDName(dName);
         drinks[dId - 1].setPrice(price);
-        System.out.println("Successfully Edit " + this.drinks[dId - 1].showDrink());
+        System.out.println("Successfully Edit ");
+        this.drinks[dId - 1].showDrink();
+        
     }
 
     public void showAllDrinks() {
-        String text = "-----Menu-----\n";
+        System.out.println("--------Menu--------");
         for (int i = 0; i < this.drinks.length; i++) {
-            text = text + this.drinks[i].showDrink();
+            System.out.print(i+1 + ". ");
+            this.drinks[i].showDrink();
         }
-        System.out.println(text);
-        ;
+        System.out.println("--------------------");
     }
 
     public Drink getADrink(int dId) {

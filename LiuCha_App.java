@@ -1,7 +1,7 @@
-public class Demo {
+public class LiuCha_App {
 
     public static void main(String[] args) {
-        Cafe cafe = new Cafe();
+        Shop cafe = new Shop();
         cafe.run();
     }
 }

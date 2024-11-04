@@ -52,7 +52,7 @@ public class Customer extends Person {
         this.points = this.points + num;
     }
 
-    public void usePoint(){
-        this.points = this.points-10;
+    public void usePoint() {
+        this.points = this.points - 10;
     }
 }

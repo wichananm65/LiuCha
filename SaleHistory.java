@@ -45,7 +45,7 @@ public class SaleHistory {
     }
 
     public void showSaleHistory() {
-        System.out.println("--------------------");
+        System.out.println("---------------------------------------");
         System.out.println("Sales of " + date);
         for (int i = 0; i < receipts.length; i++) {
             if (receipts[i] != null) {
@@ -53,6 +53,6 @@ public class SaleHistory {
             }
         }
         System.out.println("Total sale is " + sale);
-        System.out.println("--------------------");
+        System.out.println("---------------------------------------");
     }
 }

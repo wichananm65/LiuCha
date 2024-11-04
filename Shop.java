@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.time.LocalDate;
 
-public class Cafe {
+public class Shop {
     private boolean authenticate;
     private int currentCusId;
     private Customer[] customers;
@@ -15,7 +15,7 @@ public class Cafe {
 
     private Scanner sc;
 
-    public Cafe() {
+    public Shop() {
         this.authenticate = false;
         this.drinkDb = new DrinksDatabase();
         this.orders = new Order[0];
@@ -42,12 +42,14 @@ public class Cafe {
     public void run() {
         boolean loop = true;
         while (loop) {
-            System.out.println("Welcome to Liu'Cha");
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Press select your app by number");
-            System.out.println("1. Customer");
-            System.out.println("2. Owner");
-            System.out.println("3. Rider");
+            System.out.println("-------------------");
+            System.out.println("Welcome to Liu'Cha|");
+            System.out.println("--------------------------------");
+            System.out.println("Press select your app by number|");
+            System.out.println("1. Customer                    |");
+            System.out.println("2. Owner                       |");
+            System.out.println("3. Rider                       |");
+            System.out.println("--------------------------------");
             int num = sc.nextInt();
             switch (num) {
                 case 1:
@@ -67,11 +69,11 @@ public class Cafe {
 
     public void customerApp() {
 
-        System.out.println("-------------------");
-        System.out.println("Please enter number");
-        System.out.println("1.Login");
-        System.out.println("2.Register");
-        System.out.println("-------------------");
+        System.out.println("---------------------");
+        System.out.println("Please enter number |");
+        System.out.println("1.Login             |");
+        System.out.println("2.Register          |");
+        System.out.println("---------------------");
         int selectNum = sc.nextInt();
         sc.nextLine();
         switch (selectNum) {
@@ -105,6 +107,7 @@ public class Cafe {
                                         this.drinkDb,
                                         null);
                                 this.orders[this.orders.length - 1].ordering();
+                                System.out.println("----------------------------------------");
                                 System.out.println("Enter your bankaccount");
                                 String bankAccount = sc.next();
                                 for (int i = 0; i < payments.length; i++) {
@@ -232,17 +235,19 @@ public class Cafe {
     }
 
     public boolean cusLogin() {
+        System.out.println("----------------------------");
         String phone = fillPhoneNum();
-        System.out.println("please enter your password");
+        System.out.println("please enter your password |");
         String password = sc.nextLine();
         authenticate = authenticateCus(phone, password);
         if (authenticate == true) {
-            System.out.println("-------------------");
+            System.out.println("----------------------------");
             System.out.println("Welcome " + customers[currentCusId].getName());
             return true;
         } else {
-            System.out.println("Wrong phone number or password. Please try again");
-            System.out.println("-------------------");
+            System.out.println("--------------------------------------------------");
+            System.out.println("Wrong phone number or password. Please try again |");
+            System.out.println("--------------------------------------------------");
             return false;
         }
     }
@@ -296,12 +301,12 @@ public class Cafe {
                     deliverCount++;
                 }
             }
-            System.out.println("------------------");
-            System.out.println("Please select number");
-            System.out.println("1. Receieve Order");
-            System.out.println("2. Deliver Order");
-            System.out.println("3. Exit");
-            System.out.println("------------------");
+            System.out.println("----------------------");
+            System.out.println("Please select number |");
+            System.out.println("1. Receieve Order    |");
+            System.out.println("2. Deliver Order     |");
+            System.out.println("3. Exit              |");
+            System.out.println("----------------------");
             int num = sc.nextInt();
             sc.nextLine();
             switch (num) {
@@ -314,7 +319,7 @@ public class Cafe {
                         System.out.println("Not has order");
                         break;
                     }
-                    System.out.println("------------------");
+                    System.out.println("----------------------------------------");
                     System.out.println("Select Order ID");
                     select = sc.nextInt();
                     if ((select <= orders.length && (select > 0))) {
@@ -337,7 +342,7 @@ public class Cafe {
                         System.out.println("Not has order");
                         break;
                     }
-                    System.out.println("------------------");
+                    System.out.println("----------------------------------------");
                     System.out.println("Select Order ID");
                     select = sc.nextInt();
                     riders[currentRiId].updateIncome(10);
@@ -389,6 +394,7 @@ public class Cafe {
     }
 
     public boolean riLogin() {
+        sc.nextLine();
         String phone = fillPhoneNum();
         System.out.println("please enter your password");
         String password = sc.nextLine();
@@ -549,6 +555,7 @@ public class Cafe {
     }
 
     public void checkSaleHistory() {
+        System.out.println("---------------------------------------");
         System.out.println("Enter date (YYYY-MM-DD)");
         String selectDate = sc.next();
         for (int i = 0; i < saleHistories.length; i++) {
@@ -557,6 +564,7 @@ public class Cafe {
                 break;
             } else if ((i == saleHistories.length - 1) && (!saleHistories[i].getDate().toString().equals(selectDate))) {
                 System.out.println("Not has sale that day");
+                System.out.println("---------------------------------------");
             }
         }
     }

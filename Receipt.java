@@ -24,10 +24,10 @@ public class Receipt {
     }
 
     public void showReceipt() {
-        System.out.println("-------------------");
+        System.out.println("---------------------------------------");
         System.out.println("Receipt ID: " + rId);
         System.out.println(detail);
-        System.out.println("-------------------");
+        System.out.println("---------------------------------------");
     }
 
 }

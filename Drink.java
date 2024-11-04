@@ -7,12 +7,16 @@ public class Drink {
     private String topping;
     private String sweetness;
 
+    private Scanner sc;
+
     public Drink(int dId, String dName, double price) {
         this.dId = dId;
         this.dName = dName;
         this.price = price;
         topping = "None";
         sweetness = "Regular";
+
+        this.sc = new Scanner(System.in);
     }
 
     // get
@@ -50,14 +54,15 @@ public class Drink {
     }
 
     public void setTopping() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Select your Topping by number");
-        System.out.println("1. Bubble");
-        System.out.println("2. Fruit Salad");
-        System.out.println("3. Konjac");
-        System.out.println("4. Brown Sugar Konjac");
-        System.out.println("5. Diamond oKonjac");
-        System.out.println("6. None");
+        System.out.println("-------------------------------");
+        System.out.println("Select your Topping by number |");
+        System.out.println("1. Bubble                     |");
+        System.out.println("2. Fruit Salad                |");
+        System.out.println("3. Konjac                     |");
+        System.out.println("4. Brown Sugar Konjac         |");
+        System.out.println("5. Diamond oKonjac            |");
+        System.out.println("6. None                       |");
+        System.out.println("-------------------------------");
 
         boolean loop = true;
         int toppingNum;
@@ -88,8 +93,7 @@ public class Drink {
                     loop = false;
                     break;
                 default:
-                    System.out.println("Wrong command. Please select Number between 1-6");
-                    System.out.println("Select your Topping by number");
+                    System.out.println("Wrong input. Please select Number between 1-6");
                     break;
             }
         }
@@ -103,12 +107,13 @@ public class Drink {
     }
 
     public void setSweetness() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Select your Sweetness by number");
-        System.out.println("1. None");
-        System.out.println("2. Little");
-        System.out.println("3. Regular");
-        System.out.println("4. Very");
+        System.out.println("---------------------------------");
+        System.out.println("Select your Sweetness by number |");
+        System.out.println("1. None                         |");
+        System.out.println("2. Little                       |");
+        System.out.println("3. Regular                      |");
+        System.out.println("4. Very                         |");
+        System.out.println("---------------------------------");
 
         boolean loop = true;
         int sweetnessNum;
@@ -139,8 +144,8 @@ public class Drink {
         }
     }
 
-    public String showDrink() {
-        return dId + ". " + dName + " " + " " + price + " Baht\n";
+    public void showDrink() {
+        System.out.println(dName + " " + " " + price + " Baht");
     }
 
 }
