@@ -1,11 +1,9 @@
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Order {
     // attribute
     private int oId;
     private double totalPrice;
-    private LocalDate date;
     private String status;
 
     // composition
@@ -21,11 +19,9 @@ public class Order {
     public Order(int oId, Customer customer, DrinksDatabase drinkDb, Rider rider) {
         this.oId = oId;
         this.customer = customer;
-        this.payment = payment;
         this.rider = null;
         this.drinkDb = drinkDb;
 
-        date = LocalDate.now();
         totalPrice = 0;
         this.orderedDrinks = new Drink[0];
         this.status = "In progress";

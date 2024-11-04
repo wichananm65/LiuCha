@@ -4,7 +4,6 @@ public class SaleHistory {
     // attribute
     private int saId;
     private double sale;
-    private int receiptCount;
     private LocalDate date;
 
     // composition
@@ -13,7 +12,6 @@ public class SaleHistory {
     public SaleHistory(LocalDate date) {
         sale = 0;
         this.receipts = new Receipt[10];
-        this.receiptCount = 0;
         this.date = LocalDate.now();
     }
 
