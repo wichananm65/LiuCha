@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.time.LocalDate;
+import javax.swing.*;
+import java.awt.*;
 
 public class Shop {
     private boolean authenticate;
@@ -107,25 +109,7 @@ public class Shop {
                                         this.drinkDb,
                                         null);
                                 this.orders[this.orders.length - 1].ordering();
-                                System.out.println("----------------------------------------");
-                                System.out.println("Enter your bankaccount");
-                                String bankAccount = sc.next();
-                                for (int i = 0; i < payments.length; i++) {
-                                    if (bankAccount.equals(payments[i].getBankAccount())) {
-                                        if (payments[i]
-                                                .paid(this.orders[this.orders.length - 1].getTotalPrice()) == true) {
-                                            break;
-                                        } else {
-                                            this.orders[this.orders.length - 1].cancelOrder();
-                                            break;
-                                        }
-                                    }
-                                    if ((i == payments.length - 1)
-                                            && (bankAccount.equals(payments[i].getBankAccount()) == false)) {
-                                        System.out.println("Invalid account number");
-                                        this.orders[this.orders.length - 1].cancelOrder();
-                                    }
-                                }
+                                selectPaymentMethod();
                             } else {
                                 Order[] newOrders = new Order[this.orders.length + 1];
                                 for (int i = 0; i < this.orders.length; i++) {
@@ -135,24 +119,7 @@ public class Shop {
                                         this.drinkDb, null);
                                 this.orders = newOrders;
                                 this.orders[this.orders.length - 1].ordering();
-                                System.out.println("Enter your bankaccount");
-                                String bankAccount = sc.next();
-                                for (int i = 0; i < payments.length; i++) {
-                                    if (bankAccount.equals(payments[i].getBankAccount())) {
-                                        if (payments[i]
-                                                .paid(this.orders[this.orders.length - 1].getTotalPrice()) == true) {
-                                            break;
-                                        } else {
-                                            this.orders[this.orders.length - 1].cancelOrder();
-                                            break;
-                                        }
-                                    }
-                                    if ((i == payments.length - 1)
-                                            && (bankAccount.equals(payments[i].getBankAccount()) == false)) {
-                                        System.out.println("Invalid account number");
-                                        this.orders[this.orders.length - 1].cancelOrder();
-                                    }
-                                }
+                                selectPaymentMethod();
                             }
 
                             break;
@@ -518,7 +485,7 @@ public class Shop {
                     break;
 
                 default:
-                    System.out.println("Wrong input. Please choose number between 1-3");
+                    System.out.println("Wrong input. Please choose number between 1-7");
                     break;
             }
         }
@@ -599,6 +566,57 @@ public class Shop {
                     password, phone);
             customers = newCustomers;
             System.out.println("Sucessfully register");
+        }
+
+    }
+
+    public void selectPaymentMethod() {
+        System.out.println("--------------------------------------------");
+        System.out.println("Please select your payment method by number");
+        System.out.println("1.Bank Account");
+        System.out.println("2.QR code");
+        int select = sc.nextInt();
+        boolean loop = true;
+        while (loop == true) {
+            switch (select) {
+                case 1:
+                    System.out.println("----------------------------------------");
+                    System.out.println("Enter your bankaccount");
+                    String bankAccount = sc.next();
+                    for (int i = 0; i < payments.length; i++) {
+                        if (bankAccount.equals(payments[i].getBankAccount())) {
+                            if (payments[i]
+                                    .paid(this.orders[this.orders.length - 1].getTotalPrice()) == true) {
+                                break;
+                            } else {
+                                this.orders[this.orders.length - 1].cancelOrder();
+                                break;
+                            }
+                        }
+                        if ((i == payments.length - 1)
+                                && (bankAccount.equals(payments[i].getBankAccount()) == false)) {
+                            System.out.println("Invalid account number");
+                            this.orders[this.orders.length - 1].cancelOrder();
+                        }
+                    }
+                    loop = false;
+                    break;
+
+                case 2:
+                    JFrame frame = new JFrame("QR Code");
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.setSize(1000, 1000);
+                    ImageIcon imageIcon = new ImageIcon("QR.jpg");
+                    JLabel imageLabel = new JLabel(imageIcon);
+                    frame.add(imageLabel, BorderLayout.CENTER);
+                    frame.setVisible(true);
+                    loop = false;
+                    break;
+
+                default:
+                    System.out.println("Please select number 1 or 2");
+                    break;
+            }
         }
 
     }

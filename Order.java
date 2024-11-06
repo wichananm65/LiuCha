@@ -44,7 +44,6 @@ public class Order {
                 this.totalPrice = this.totalPrice + orderedDrinks[orderedDrinks.length - 1].getPrice();
             } else if (num == drinkDb.getDrinksCount() + 2) {
                 showOrder();
-                System.out.println("Total price: " + getTotalPrice());
                 ordering = false;
             } else if (num == drinkDb.getDrinksCount() + 1) {
                 System.out.println("Select a drink to cancel by number");
@@ -212,10 +211,8 @@ public class Order {
         }
         if (this.rider != null) {
             rider.showRider();
-        } else {
-            System.out.println("Waiting rider to receive");
         }
-        System.out.println("Total price: " + totalPrice);
+        System.out.println("Total price: " + totalPrice + "Baht");
     }
 
 }
