@@ -16,6 +16,10 @@ public class Payment {
         return money;
     }
 
+    public void refund(double money){
+        this.money = this.money + money;
+    }
+
     public boolean paid(double price) {
         if (this.money < price) {
             System.out.println("Insufficient balance");

@@ -131,6 +131,11 @@ public class Shop {
                                 System.out.println("Not has that order");
                             } else {
                                 this.orders[oId - 1].cancelOrder();
+                                for (int i = 0; i <= orders.length; i++) {
+                                    if (orders[oId - 1].getPayment() == payments[i]) {
+                                        payments[i].refund(orders[oId - 1].getTotalPrice());
+                                    }
+                                }
                             }
                             break;
 
@@ -272,7 +277,8 @@ public class Shop {
             System.out.println("Please select number |");
             System.out.println("1. Receieve Order    |");
             System.out.println("2. Deliver Order     |");
-            System.out.println("3. Exit              |");
+            System.out.println("3. Check income      |");
+            System.out.println("4. Exit              |");
             System.out.println("----------------------");
             int num = sc.nextInt();
             sc.nextLine();
@@ -348,10 +354,14 @@ public class Shop {
                     break;
 
                 case 3:
+                    System.out.println("Your income is " + riders[currentRiId].getIncome());
+                    break;
+
+                case 4:
                     loop = false;
                     break;
                 default:
-                    System.out.println("Wrong input. Please choose number between 1-3");
+                    System.out.println("Wrong input. Please choose number between 1-4");
                     break;
 
             }
@@ -587,6 +597,7 @@ public class Shop {
                         if (bankAccount.equals(payments[i].getBankAccount())) {
                             if (payments[i]
                                     .paid(this.orders[this.orders.length - 1].getTotalPrice()) == true) {
+                                this.orders[this.orders.length - 1].setPayment(payments[i]);
                                 break;
                             } else {
                                 this.orders[this.orders.length - 1].cancelOrder();

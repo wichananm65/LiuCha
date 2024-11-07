@@ -122,8 +122,8 @@ public class Order {
         return oId;
     }
 
-    public String getPayment() {
-        return payment.getBankAccount();
+    public Payment getPayment() {
+        return payment;
     }
 
     public Rider getRider() {
@@ -152,6 +152,10 @@ public class Order {
 
     public void setRider(Rider rider) {
         this.rider = rider;
+    }
+
+    public void setPayment(Payment payment){
+        this.payment = payment;
     }
 
     public void addOrderedDrink(int num) {
@@ -212,7 +216,7 @@ public class Order {
         if (this.rider != null) {
             rider.showRider();
         }
-        System.out.println("Total price: " + totalPrice + "Baht");
+        System.out.println("Total price: " + totalPrice + " Baht");
     }
 
 }
