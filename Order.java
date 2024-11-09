@@ -10,7 +10,6 @@ public class Order {
     private Customer customer;
     private DrinksDatabase drinkDb;
     private Drink[] orderedDrinks;
-    private Payment payment;
     private Rider rider;
     private Receipt receipt;
 
@@ -122,10 +121,6 @@ public class Order {
         return oId;
     }
 
-    public Payment getPayment() {
-        return payment;
-    }
-
     public Rider getRider() {
         return rider;
     }
@@ -152,10 +147,6 @@ public class Order {
 
     public void setRider(Rider rider) {
         this.rider = rider;
-    }
-
-    public void setPayment(Payment payment){
-        this.payment = payment;
     }
 
     public void addOrderedDrink(int num) {
