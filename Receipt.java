@@ -1,6 +1,5 @@
 
 public class Receipt {
-    // attribute
     private int rId;
     private String detail;
     private double totalPrice;

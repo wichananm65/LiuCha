@@ -1,15 +1,13 @@
 import java.util.Scanner;
 
 public class Order {
-    // attribute
     private int oId;
     private double totalPrice;
     private String status;
-
-    // composition
     private Customer customer;
     private DrinksDatabase drinkDb;
     private Drink[] orderedDrinks;
+    private Payment payment;
     private Rider rider;
     private Receipt receipt;
 
@@ -121,6 +119,10 @@ public class Order {
         return oId;
     }
 
+    public Payment getPayment() {
+        return payment;
+    }
+
     public Rider getRider() {
         return rider;
     }
@@ -141,12 +143,12 @@ public class Order {
         return orderedDrinks;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public void setRider(Rider rider) {
         this.rider = rider;
+    }
+
+    public void setPayment(Payment payment){
+        this.payment = payment;
     }
 
     public void addOrderedDrink(int num) {

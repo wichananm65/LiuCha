@@ -1,10 +1,8 @@
 
 public class Customer extends Person {
-    // attribute
     private String phone;
     private int points;
 
-    // composition
     private Receipt receipts[];
 
     public Customer(int id, String name, String password, String phone) {

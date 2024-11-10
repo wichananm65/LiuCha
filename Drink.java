@@ -19,7 +19,6 @@ public class Drink {
         this.sc = new Scanner(System.in);
     }
 
-    // get
     public int getDId() {
         return dId;
     }
@@ -40,7 +39,6 @@ public class Drink {
         return sweetness;
     }
 
-    // set
     public void setDid(int dId) {
         this.dId = dId;
     }

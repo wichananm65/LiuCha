@@ -2,6 +2,8 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import javax.swing.*;
 import java.awt.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Shop {
     private boolean authenticate;
@@ -21,22 +23,24 @@ public class Shop {
         this.authenticate = false;
         this.drinkDb = new DrinksDatabase();
         this.orders = new Order[0];
-        this.payments = new Payment[3];
+        this.payments = new Payment[100];
         this.saleHistories = new SaleHistory[1];
         this.saleHistories[0] = new SaleHistory(LocalDate.now());
-        this.owner = new Owner(100000, "Liu", "123456");
+        this.owner = new Owner(123456, "Liu", hash("123456"));
         riders = new Rider[2];
-        riders[0] = new Rider(1, "Sonchai", "123", "1", "Honda Icon", "AB123");
-        riders[1] = new Rider(2, "Somying", "123", "2", "Honda Wave", "BD222");
+        riders[0] = new Rider(1, "Sonchai", hash("123"), "0111111111", "Honda Icon", "AB123");
+        riders[1] = new Rider(2, "Somying", hash("123"), "0222222222", "Honda Wave", "BD222");
 
         customers = new Customer[2];
-        customers[0] = new Customer(1, "Wichanan", "123456", "0123456789");
-        customers[1] = new Customer(2, "Somsak", "1", "1");
+        customers[0] = new Customer(1, "Wichanan", hash("123456"), "0333333333");
+        customers[1] = new Customer(2, "Somsak", hash("123456"), "0444444444");
         customers[1].addPoint(10);
 
         payments[0] = new Payment("1234567890", 1000);
         payments[1] = new Payment("1111111111", 20);
         payments[2] = new Payment("2222222222", 0);
+        payments[3] = new Payment("3333333333", 56);
+        payments[4] = new Payment("4444444444", 80);
 
         this.sc = new Scanner(System.in);
     }
@@ -211,7 +215,7 @@ public class Shop {
         String phone = fillPhoneNum();
         System.out.println("please enter your password |");
         String password = sc.nextLine();
-        authenticate = authenticateCus(phone, password);
+        authenticate = authenticateCus(phone, hash(password));
         if (authenticate == true) {
             System.out.println("----------------------------");
             System.out.println("Welcome " + customers[currentCusId].getName());
@@ -319,6 +323,7 @@ public class Shop {
                     System.out.println("Select Order ID");
                     select = sc.nextInt();
                     riders[currentRiId].updateIncome(10);
+                    System.out.println("Your total income is " + riders[currentRiId].getIncome());
                     if ((select <= orders.length && (select > 0))) {
                         for (int i = 0; i < orders.length; i++) {
                             if (select == orders[i].getOId()) {
@@ -343,8 +348,6 @@ public class Shop {
                                         break;
                                     }
                                 }
-                                riders[currentRiId].updateIncome(10);
-                                System.out.println(riders[currentRiId].getIncome());
                                 break;
                             }
                         }
@@ -375,7 +378,7 @@ public class Shop {
         String phone = fillPhoneNum();
         System.out.println("please enter your password");
         String password = sc.nextLine();
-        authenticate = authenticateRi(phone, password);
+        authenticate = authenticateRi(phone, hash(password));
         if (authenticate == true) {
 
             System.out.println("Welcome " + riders[currentRiId].getName());
@@ -507,7 +510,7 @@ public class Shop {
         sc.nextLine();
         System.out.println("please enter your password");
         String password = sc.nextLine();
-        boolean authenticate = authenticateOw(id, password);
+        boolean authenticate = authenticateOw(id, hash(password));
         if (authenticate == true) {
             System.out.println("Welcome " + owner.getName());
             return true;
@@ -552,6 +555,7 @@ public class Shop {
         String phone = fillPhoneNum();
         System.out.println("Enter password");
         String password = sc.nextLine();
+        password = hash(password);
 
         boolean canRegister = false;
         for (int i = 0; i < customers.length; i++) {
@@ -630,6 +634,20 @@ public class Shop {
             }
         }
 
+    }
+
+    public static String hash(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            byte[] messageDigest = md.digest(input.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : messageDigest) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

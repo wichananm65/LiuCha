@@ -1,4 +1,4 @@
-// Payment.java
+
 public class Payment {
     private String bankAccount;
     private double money;

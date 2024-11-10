@@ -7,7 +7,6 @@ public class DrinksDatabase {
 
     public DrinksDatabase() {
         drinks = new Drink[27];
-        // Milk Tea Menu
         drinks[0] = new Drink(1, "Taiwan Milk Tea", 19);
         drinks[1] = new Drink(2, "Green Tea Milk", 19);
         drinks[2] = new Drink(3, "Pink Milk Tea", 24);
@@ -23,8 +22,6 @@ public class DrinksDatabase {
         drinks[12] = new Drink(13, "White Malt Milk Tea", 24);
         drinks[13] = new Drink(14, "Brown Sugar Tea", 24);
         drinks[14] = new Drink(15, "Brown Sugar Milk Tea", 24);
-
-        // Green Tea Menu
         drinks[15] = new Drink(16, "Jasmine Green Tea", 19);
         drinks[16] = new Drink(17, "Apple Green Tea", 24);
         drinks[17] = new Drink(18, "Melon Green Tea", 24);

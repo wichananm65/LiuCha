@@ -1,12 +1,9 @@
 import java.time.LocalDate;
 
 public class SaleHistory {
-    // attribute
     private int saId;
     private double sale;
     private LocalDate date;
-
-    // composition
     private Receipt[] receipts;
 
     public SaleHistory(LocalDate date) {
